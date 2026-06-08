@@ -3,343 +3,325 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>YTech</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<title>YTech – תיקון ופיתוח אנדרואיד</title>
 <link rel="icon" type="image/x-icon" href="favsion.ico?v=3"/>
 <link rel="shortcut icon" type="image/x-icon" href="favsion.ico?v=3"/>
-<link rel="apple-touch-icon" href="favsion.ico?v=3"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-:root{
-  --blue:#007bff;--cyan:#00d4ff;--bg:#07111f;--bg2:#0d1e2e;--bg3:#0a1828;
-  --text:#e2e8f0;--muted:#94a3b8;--border:rgba(0,212,255,.15);
-  --grad:linear-gradient(135deg,var(--blue),var(--cyan));
-  --glow:0 0 40px rgba(0,212,255,.18);
-  --card-hover:0 20px 60px rgba(0,212,255,.22);
-  --green:#22c55e;--red:#ef4444;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direction:rtl;overflow-x:hidden}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
 
-/* CANVAS */
-#bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-
-/* NAV */
-nav{position:fixed;top:0;right:0;left:0;z-index:900;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(15,23,42,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
-.nav-logo{font-size:1.59rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:.86rem;font-weight:500;transition:color .2s;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;right:0;width:0;height:2px;background:var(--grad);transition:width .3s}
-.nav-links a:hover{color:var(--cyan)}.nav-links a:hover::after{width:100%}
-.nav-right{display:flex;align-items:center;gap:.6rem}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
-.hamburger span{display:block;width:24px;height:2px;background:var(--cyan);border-radius:2px;transition:.3s}
-
-/* LAYOUT */
-.page{position:relative;z-index:1}
-section{padding:100px 2rem 60px;max-width:1100px;margin:0 auto}
-
-/* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;max-width:100%;padding:120px 2rem 60px}
-.hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 55% at 50% 45%,rgba(0,123,255,.13) 0%,transparent 70%),radial-gradient(ellipse 45% 35% at 80% 80%,rgba(0,212,255,.09) 0%,transparent 60%)}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1.1rem;border:1px solid var(--border);border-radius:100px;font-size:.78rem;color:var(--cyan);margin-bottom:1.5rem;background:rgba(0,212,255,.06);animation:fadeDown .6s ease both}
-.hero-badge::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.hero-title{font-size:clamp(3rem,8vw,6rem);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:.5rem;background:linear-gradient(135deg,#fff 30%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp .6s .1s ease both}
-.hero-sub{font-size:clamp(1rem,3vw,1.4rem);color:var(--muted);margin-bottom:2.5rem;animation:fadeUp .6s .2s ease both}
-.hero-sub span{color:var(--cyan);font-weight:600}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .6s .3s ease both}
-.hero-stats{display:flex;gap:3rem;margin-top:4rem;animation:fadeUp .6s .4s ease both;flex-wrap:wrap;justify-content:center}
-.stat{text-align:center}
-.stat-num{font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-label{font-size:.78rem;color:var(--muted);margin-top:.2rem}
-
-/* BUTTONS */
-.btn-primary{padding:.82rem 1.8rem;border-radius:12px;background:var(--grad);color:#fff;font-family:'Heebo',sans-serif;font-size:.92rem;font-weight:700;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(0,123,255,.35)}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,212,255,.4)}
-.btn-outline{padding:.82rem 1.8rem;border-radius:12px;background:transparent;color:var(--cyan);font-family:'Heebo',sans-serif;font-size:.92rem;font-weight:600;border:1.5px solid var(--cyan);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:background .2s,transform .2s}
-.btn-outline:hover{background:rgba(0,212,255,.08);transform:translateY(-3px)}
-.btn-danger{padding:.55rem 1.1rem;border-radius:8px;background:rgba(239,68,68,.1);color:var(--red);font-family:'Heebo',sans-serif;font-size:.8rem;font-weight:600;border:1px solid rgba(239,68,68,.3);cursor:pointer;transition:background .2s}
-.btn-danger:hover{background:rgba(239,68,68,.22)}
-.btn-sm{padding:.5rem 1rem;font-size:.8rem;border-radius:8px}
-
-/* SECTION HEADER */
-.section-label{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:.75rem}
-.section-title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;line-height:1.15;margin-bottom:1rem}
-.section-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.section-desc{color:var(--muted);max-width:500px;line-height:1.7;margin-bottom:2.5rem}
-
-/* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:2rem;display:flex;flex-direction:column;gap:.9rem;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}
-.card::before{content:'';position:absolute;top:0;right:0;left:0;height:2px;background:var(--grad);opacity:0;transition:opacity .3s}
-.card:hover{transform:translateY(-8px);box-shadow:var(--card-hover);border-color:rgba(0,212,255,.3)}
-.card:hover::before{opacity:1}
-.card.featured{border-color:rgba(0,123,255,.4);background:linear-gradient(160deg,#1e293b,#162032)}.card.featured::before{opacity:1}
-.card-icon{width:46px;height:46px;border-radius:13px;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;font-size:1.71rem}
-.card-price{font-size:2.1rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.card-price span{font-size:.95rem;font-weight:600}
-.card-title{font-size:1.52rem;font-weight:700}
-.card-short{font-size:.8rem;color:var(--cyan);font-weight:600}
-.card-desc{font-size:.85rem;color:var(--muted);line-height:1.6;flex:1}
-.card .btn-primary{margin-top:auto;justify-content:center}
-
-/* APPS */
-.app-cat{font-size:.7rem;color:var(--cyan);font-weight:600;text-transform:uppercase;letter-spacing:1.5px}
-.app-desc{font-size:.82rem;color:var(--muted);line-height:1.55;flex:1}
-.app-price-tag{font-size:.8rem;font-weight:700;color:#fff;background:var(--grad);padding:.22rem .65rem;border-radius:100px;align-self:flex-start}
-.app-free{font-size:.82rem;font-weight:700;color:var(--green)}
-
-/* FORM */
-.form-card{background:var(--bg2);border:1px solid var(--border);border-radius:22px;padding:2.5rem}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-group{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem}
-label{font-size:.82rem;font-weight:600;color:var(--muted)}
-input,select,textarea{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;color:var(--text);font-family:'Heebo',sans-serif;font-size:.9rem;direction:rtl;transition:border-color .2s,box-shadow .2s;outline:none;width:100%}
-input:focus,select:focus,textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
-select option{background:var(--bg2)}
-textarea{resize:vertical;min-height:90px}
-.form-note{font-size:.76rem;color:var(--muted);margin-top:.5rem}
-
-/* CHAT */
-
-
-
-/* TESTIMONIALS SLIDER */
-#testimonials{max-width:800px}
-.slider-wrapper{position:relative;overflow:hidden;border-radius:22px}
-.slider-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.slide{min-width:100%;padding:2.2rem 2.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:22px;display:flex;flex-direction:column;gap:1rem;box-sizing:border-box}
-.slide-stars{color:#f59e0b;font-size:1.45rem;letter-spacing:2px}
-.slide-text{font-size:1rem;color:var(--text);line-height:1.75;font-style:italic}
-.slide-text::before{content:'"';font-size:2rem;color:var(--cyan);line-height:0;vertical-align:-.4em;margin-left:.3rem}
-.slide-text::after{content:'"';font-size:2rem;color:var(--cyan);line-height:0;vertical-align:-.4em;margin-right:.3rem}
-.slide-author{display:flex;align-items:center;gap:.8rem;margin-top:.4rem}
-.slide-avatar{width:44px;height:44px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.59rem;flex-shrink:0}
-.slide-name{font-weight:700;font-size:.92rem}
-.slide-role{font-size:.76rem;color:var(--muted)}
-.slider-controls{display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:1.3rem}
-.slider-btn{width:40px;height:40px;border-radius:50%;background:rgba(0,212,255,.1);border:1px solid var(--border);color:var(--cyan);font-size:1.45rem;cursor:pointer;transition:background .2s,transform .2s;display:flex;align-items:center;justify-content:center}
-.slider-btn:hover{background:rgba(0,212,255,.25);transform:scale(1.1)}
-.slider-dots{display:flex;gap:.5rem}
-.slider-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .3s,transform .3s}
-.slider-dot.active{background:var(--cyan);transform:scale(1.3)}
-
-/* CONTACT */
-.contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:22px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
-.contact-info h3{font-size:1.55rem;font-weight:800;margin-bottom:.5rem}
-.contact-info p{color:var(--muted);font-size:.87rem;line-height:1.6}
-.contact-email{color:var(--cyan);font-weight:600;text-decoration:none;display:flex;align-items:center;gap:.4rem;margin-top:.7rem;font-size:.9rem;transition:opacity .2s}
-.contact-email:hover{opacity:.75}
-.contact-actions{display:flex;flex-direction:column;gap:.7rem}
-
-/* FOOTER */
-footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.78rem;position:relative;z-index:1}
-footer a{color:var(--cyan);text-decoration:none}
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:1100px;margin:0 auto;position:relative;z-index:1}
-
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* OVERLAY */
-.overlay{position:fixed;inset:0;z-index:9000;display:none;background:rgba(8,13,24,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);align-items:center;justify-content:center}
-.overlay.open{display:flex}
-.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:2.5rem 3rem;width:min(400px,90vw);text-align:center;box-shadow:var(--glow);animation:fadeUp .4s ease;position:relative}
-.login-box h2{font-size:1.67rem;font-weight:800;margin-bottom:.4rem}
-.login-box p{color:var(--muted);font-size:.86rem;margin-bottom:1.7rem}
-.login-icon{font-size:2.6rem;margin-bottom:.85rem}
-.login-box input{text-align:center;letter-spacing:.25rem;font-size:1.39rem;margin-bottom:.75rem;direction:ltr}
-.login-err{color:var(--red);font-size:.8rem;margin-bottom:.7rem;min-height:1.2em}
-.login-close{position:absolute;top:.9rem;left:1rem;background:none;border:none;color:var(--muted);font-size:1.71rem;cursor:pointer;transition:color .2s}
-.login-close:hover{color:#fff}
-
-/* ADMIN PANEL */
-.admin-panel{position:fixed;inset:0;z-index:9500;display:none;background:var(--bg);overflow-y:auto}
-.admin-panel.open{display:block}
-.admin-topbar{position:sticky;top:0;z-index:10;background:rgba(15,23,42,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between}
-.admin-topbar h2{font-size:1.39rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.admin-content{max-width:880px;margin:0 auto;padding:2rem 1.5rem 4rem}
-.admin-tabs{display:flex;gap:.4rem;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:.4rem;flex-wrap:wrap}
-.admin-tab{padding:.48rem 1.15rem;border-radius:8px 8px 0 0;background:none;border:none;color:var(--muted);font-family:'Heebo',sans-serif;font-size:.86rem;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
-.admin-tab.active{background:rgba(0,212,255,.1);color:var(--cyan);border-bottom:2px solid var(--cyan)}
-.admin-tab-content{display:none}.admin-tab-content.active{display:block}
-.admin-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:1.75rem;margin-bottom:1.4rem}
-.admin-card h3{font-size:1rem;font-weight:700;margin-bottom:1.4rem;color:var(--cyan)}
-.admin-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.admin-group{display:flex;flex-direction:column;gap:.38rem;margin-bottom:.9rem}
-.admin-group label{font-size:.79rem;font-weight:600;color:var(--muted)}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.4rem}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.15rem;text-align:center}
-.stat-card-num{font-size:1.9rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-card-label{font-size:.76rem;color:var(--muted);margin-top:.22rem}
-.app-list-item{background:var(--bg3);border:1px solid var(--border);border-radius:13px;padding:1.1rem;display:flex;align-items:center;gap:.9rem;margin-bottom:.75rem}
-.app-list-emoji{font-size:1.7rem;flex-shrink:0}
-.app-list-info{flex:1;min-width:0}
-.app-list-name{font-weight:700;font-size:.92rem}
-.app-list-cat{font-size:.7rem;color:var(--cyan);text-transform:uppercase;letter-spacing:1px}
-.app-list-desc{font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app-list-price{font-size:.8rem;font-weight:700;color:var(--cyan);white-space:nowrap}
-.app-list-actions{display:flex;gap:.45rem;flex-shrink:0}
-
-
-/* SUCCESS BUBBLE */
-.form-success{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(0,123,255,.12),rgba(0,212,255,.12));border:1px solid rgba(0,212,255,.4);border-radius:16px;padding:1.1rem 1.4rem;margin-top:1rem;animation:fadeUp .4s ease}
-.form-success-icon{font-size:2rem;flex-shrink:0}
-.form-success-text strong{display:block;font-size:1rem;font-weight:800;color:var(--cyan);margin-bottom:.2rem}
-.form-success-text span{font-size:.9rem;color:var(--muted)}
-.form-error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);border-radius:16px;padding:1rem 1.4rem;margin-top:1rem;color:var(--red);font-size:.92rem;font-weight:600}
-
-
-/* LIGHT MODE */
-body.light{
-  --bg:#f5f8ff;--bg2:#ffffff;--bg3:#edf1fb;
-  --text:#0f1e35;--muted:#556070;--border:rgba(0,100,200,.14);
-  --grad:linear-gradient(135deg,#0060e0,#00aaff);
-  --glow:0 0 40px rgba(0,120,255,.1);
-  --card-hover:0 20px 60px rgba(0,100,255,.13);
-  --green:#16a34a;--red:#dc2626;
-  --cyan:#0070cc;
+:root {
+  --bg:     #111114;
+  --surface:#1c1c20;
+  --line:   #2a2a30;
+  --text:   #f0f0f2;
+  --sub:    #9898a6;
+  --accent: #5b6cf8;
+  --accent2:#8b5cf6;
+  --green:  #22c55e;
+  --red:    #ef4444;
 }
 
-/* NAV */
-body.light nav{
-  background:rgba(245,248,255,.88);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(0,100,200,.12);
-  box-shadow:0 2px 16px rgba(0,80,200,.08);
+body {
+  font-family: 'Heebo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  overflow-x: hidden;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
-body.light .nav-logo{background:linear-gradient(135deg,#0060e0,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .nav-links a{color:#4a5a70}
-body.light .nav-links a:hover{color:#0070cc}
 
-/* HERO */
-body.light .hero-glow{background:radial-gradient(ellipse 70% 55% at 50% 45%,rgba(0,100,255,.08) 0%,transparent 70%)}
-body.light .hero-badge{background:rgba(0,100,255,.06);border-color:rgba(0,120,255,.2);color:#0070cc}
-body.light .hero-title{background:linear-gradient(135deg,#0f1e35 30%,#0070cc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .hero-sub{color:#556070}
-body.light .hero-sub span{color:#0070cc}
-body.light .stat-num{background:linear-gradient(135deg,#0060e0,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .stat-label{color:#556070}
+::-webkit-scrollbar { width: 4px }
+::-webkit-scrollbar-track { background: var(--bg) }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px }
 
-/* CARDS */
-body.light .card{background:#fff;border-color:rgba(0,100,200,.12);box-shadow:0 2px 20px rgba(0,80,200,.06)}
-body.light .card:hover{box-shadow:0 20px 50px rgba(0,100,255,.13);border-color:rgba(0,120,255,.25)}
-body.light .card.featured{background:linear-gradient(160deg,#f0f6ff,#e8f0ff);border-color:rgba(0,100,255,.2)}
-body.light .card-icon{background:rgba(0,120,255,.08)}
-body.light .card-price{background:linear-gradient(135deg,#0060e0,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .card-short{color:#0070cc}
-body.light .card-desc{color:#556070}
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; right: 0; left: 0; z-index: 900;
+  height: 60px; padding: 0 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(17,17,20,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  font-size: 1.1rem; font-weight: 800; letter-spacing: -.3px; color: var(--text);
+}
+.logo span { color: var(--accent) }
+.nav-links { display: flex; gap: 2.2rem; list-style: none }
+.nav-links a {
+  font-size: .9rem; font-weight: 500; color: var(--sub);
+  text-decoration: none; transition: color .15s;
+}
+.nav-links a:hover { color: var(--text) }
+.nav-right { display: flex; align-items: center; gap: .6rem }
+.theme-btn {
+  background: none; border: 1px solid var(--line); border-radius: 7px;
+  color: var(--sub); font-size: .88rem; padding: .3rem .55rem;
+  cursor: pointer; transition: color .15s, border-color .15s; display: flex; align-items: center;
+}
+.theme-btn:hover { color: var(--text); border-color: #444 }
+.hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; background: none; border: none; padding: .3rem }
+.hamburger span { display: block; width: 20px; height: 2px; background: var(--sub); border-radius: 2px }
 
-/* SECTION */
-body.light .section-label{color:#0070cc}
-body.light .section-title span{background:linear-gradient(135deg,#0060e0,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .section-desc{color:#556070}
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 2rem 60px;
+  position: relative;
+}
+#hero::before {
+  content: '';
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%, rgba(91,108,248,.12) 0%, transparent 70%);
+}
+.hero-eyebrow {
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 1.4rem;
+}
+.hero-h1 {
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  font-weight: 900; line-height: 1.08;
+  letter-spacing: -1.5px; color: var(--text);
+  margin-bottom: 1.3rem;
+}
+.hero-h1 .hl {
+  color: var(--accent);
+}
+.hero-p {
+  font-size: 1.08rem; color: var(--sub);
+  max-width: 480px; line-height: 1.85;
+  margin-bottom: 2.4rem;
+}
+.hero-btns { display: flex; gap: .85rem; justify-content: center; flex-wrap: wrap }
+.hero-stats {
+  display: flex; gap: 3.5rem; margin-top: 4rem;
+  padding-top: 2.5rem; border-top: 1px solid var(--line);
+  flex-wrap: wrap; justify-content: center;
+}
+.hs-n { font-size: 1.8rem; font-weight: 800; color: var(--text); line-height: 1 }
+.hs-l { font-size: .8rem; color: var(--sub); margin-top: .3rem }
 
-/* FORM */
-body.light .form-card{background:#fff;border-color:rgba(0,100,200,.12);box-shadow:0 4px 24px rgba(0,80,200,.07)}
-body.light input,body.light select,body.light textarea{background:#f8fafd;color:#0f1e35;border-color:rgba(0,100,200,.18)}
-body.light input:focus,body.light select:focus,body.light textarea:focus{border-color:#0070cc;box-shadow:0 0 0 3px rgba(0,112,204,.1)}
-body.light label{color:#556070}
-body.light select option{background:#fff;color:#0f1e35}
-body.light .form-note{color:#8090a4}
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .72rem 1.55rem; border-radius: 9px;
+  font-family: 'Heebo', sans-serif; font-size: .92rem; font-weight: 700;
+  cursor: pointer; text-decoration: none; transition: all .18s; border: none;
+}
+.btn-fill {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 4px 18px rgba(91,108,248,.3);
+}
+.btn-fill:hover { background: #4a5be6; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(91,108,248,.4) }
+.btn-line {
+  background: transparent; color: var(--text);
+  border: 1px solid var(--line);
+}
+.btn-line:hover { background: var(--surface); border-color: #3a3a42 }
+.btn-danger { background: rgba(239,68,68,.1); color: var(--red); border: 1px solid rgba(239,68,68,.2); padding: .45rem .9rem; border-radius: 7px; font-family: 'Heebo',sans-serif; font-size: .82rem; font-weight: 600; cursor: pointer; transition: background .15s }
+.btn-danger:hover { background: rgba(239,68,68,.2) }
+.btn-sm { padding: .42rem .85rem; font-size: .82rem }
+.btn-outline { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; border-radius: 7px; background: transparent; color: var(--accent); font-family: 'Heebo',sans-serif; font-size: .84rem; font-weight: 600; border: 1px solid rgba(91,108,248,.3); cursor: pointer; text-decoration: none; transition: background .15s }
+.btn-outline:hover { background: rgba(91,108,248,.1) }
 
-/* TESTIMONIALS */
-body.light .slide{background:#fff;border-color:rgba(0,100,200,.1);box-shadow:0 2px 20px rgba(0,80,200,.06)}
-body.light .slide-text{color:#1a2840}
-body.light .slide-text::before,body.light .slide-text::after{color:#0070cc}
-body.light .slide-name{color:#0f1e35}
-body.light .slide-role{color:#8090a4}
-body.light .slide-avatar{background:linear-gradient(135deg,#0060e0,#00aaff)}
-body.light .slider-btn{background:rgba(0,100,255,.08);border-color:rgba(0,100,200,.2);color:#0070cc}
-body.light .slider-btn:hover{background:rgba(0,100,255,.18)}
-body.light .slider-dot{background:rgba(0,100,200,.2)}
-body.light .slider-dot.active{background:#0070cc}
+/* ── SECTIONS ── */
+.page { position: relative; z-index: 1 }
+section { padding: 100px 2rem 60px; max-width: 1060px; margin: 0 auto }
+.sh { text-align: center; margin-bottom: 3rem }
+.sh-label {
+  font-size: .74rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: .65rem;
+}
+.sh-title {
+  font-size: clamp(1.65rem, 3vw, 2.3rem);
+  font-weight: 800; line-height: 1.2; letter-spacing: -.4px;
+  color: var(--text); margin-bottom: .75rem;
+}
+.sh-desc { font-size: .97rem; color: var(--sub); line-height: 1.8; max-width: 440px; margin: 0 auto }
 
-/* CONTACT */
-body.light .contact-card{background:#fff;border-color:rgba(0,100,200,.12);box-shadow:0 4px 24px rgba(0,80,200,.07)}
-body.light .contact-email{color:#0070cc}
+/* ── SERVICES ── */
+.svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden }
+.svc {
+  background: var(--bg); padding: 1.8rem 1.6rem;
+  display: flex; flex-direction: column; gap: .7rem;
+  transition: background .2s;
+}
+.svc:hover { background: var(--surface) }
+.svc-icon-wrap {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(91,108,248,.12); color: var(--accent);
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.svc-price-big { font-size: 2.2rem; font-weight: 900; color: var(--text); line-height: 1 }
+.svc-price-big small { font-size: .95rem; font-weight: 500; color: var(--sub) }
+.svc-title { font-size: 1rem; font-weight: 700; color: var(--text) }
+.svc-hint { font-size: .72rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .06em }
+.svc-desc-t { font-size: .86rem; color: var(--sub); line-height: 1.6; flex: 1 }
 
-/* BUTTONS */
-body.light .btn-outline{color:#0070cc;border-color:#0070cc}
-body.light .btn-outline:hover{background:rgba(0,112,204,.07)}
-body.light .theme-toggle{border-color:rgba(0,100,200,.2);color:#556070}
-body.light .theme-toggle:hover{color:#0070cc;border-color:#0070cc}
+/* ── FORM ── */
+.form-box {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 16px; padding: 2.2rem;
+}
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem }
+.fg { display: flex; flex-direction: column; gap: .38rem; margin-bottom: .9rem }
+.fg label { font-size: .82rem; font-weight: 600; color: var(--sub) }
+input, select, textarea {
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 9px; padding: .68rem 1rem;
+  color: var(--text); font-family: 'Heebo', sans-serif; font-size: .93rem;
+  direction: rtl; outline: none; width: 100%; transition: border-color .15s;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent) }
+select option { background: var(--surface) }
+textarea { resize: vertical; min-height: 85px }
+.form-note { font-size: .78rem; color: var(--sub); margin-top: .55rem }
 
-/* ADMIN */
-body.light .admin-panel{background:var(--bg)}
-body.light .admin-topbar{background:rgba(245,248,255,.95);border-color:rgba(0,100,200,.12)}
-body.light .admin-card{background:#fff;border-color:rgba(0,100,200,.12)}
-body.light .admin-tab{color:#556070}
-body.light .admin-tab.active{background:rgba(0,100,255,.08);color:#0070cc;border-bottom-color:#0070cc}
-body.light .admin-group label{color:#556070}
-body.light .stat-card{background:#fff;border-color:rgba(0,100,200,.12)}
-body.light .stat-card-num{background:linear-gradient(135deg,#0060e0,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-body.light .stat-card-label{color:#8090a4}
-body.light .app-list-item{background:#f5f8ff;border-color:rgba(0,100,200,.1)}
-body.light .app-list-cat{color:#0070cc}
-body.light .app-list-price{color:#0070cc}
-body.light .app-list-desc{color:#556070}
+/* ── TESTIMONIALS ── */
+.slider-wrapper { overflow: hidden; border-radius: 16px }
+.slider-track { display: flex; transition: transform .48s cubic-bezier(.4,0,.2,1) }
+.slide {
+  min-width: 100%; padding: 2rem 2.3rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.slide-stars { color: #fbbf24; letter-spacing: 2px; font-size: .95rem }
+.slide-quote { font-size: 1rem; color: var(--text); line-height: 1.8; font-style: italic; opacity: .9 }
+.slide-quote::before { content: '"'; color: var(--accent); font-size: 1.8rem; line-height: 0; vertical-align: -.4em; margin-left: .25rem }
+.slide-quote::after  { content: '"'; color: var(--accent); font-size: 1.8rem; line-height: 0; vertical-align: -.4em; margin-right: .25rem }
+.slide-who { display: flex; align-items: center; gap: .8rem }
+.slide-av { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-size: .9rem; flex-shrink: 0 }
+.slide-nm { font-weight: 700; font-size: .9rem }
+.slide-role { font-size: .75rem; color: var(--sub) }
+.sl-ctrl { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.2rem }
+.sl-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); color: var(--sub); font-size: .95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color .15s, border-color .15s }
+.sl-btn:hover { color: var(--text); border-color: #444 }
+.sl-dots { display: flex; gap: .45rem }
+.sl-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); cursor: pointer; transition: background .25s, transform .25s }
+.sl-dot.active { background: var(--accent); transform: scale(1.4) }
 
-/* OVERLAY & LOGIN */
-body.light .overlay{background:rgba(200,215,240,.92)}
-body.light .login-box{background:#fff;border-color:rgba(0,100,200,.15)}
-body.light .login-close{color:#8090a4}
-body.light .login-box h2{color:#0f1e35}
-body.light .login-box p{color:#556070}
+/* ── CONTACT ── */
+.contact-box {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
+}
+.contact-title { font-size: 1.4rem; font-weight: 800; margin-bottom: .4rem }
+.contact-sub { font-size: .92rem; color: var(--sub); line-height: 1.7 }
+.contact-mail { display: inline-flex; align-items: center; gap: .4rem; color: var(--accent); font-size: .92rem; font-weight: 600; text-decoration: none; margin-top: .7rem; transition: opacity .15s }
+.contact-mail:hover { opacity: .75 }
+.contact-btns { display: flex; flex-direction: column; gap: .7rem }
 
-/* FOOTER */
-body.light footer{border-top-color:rgba(0,100,200,.1);color:#8090a4}
-body.light footer a{color:#0070cc}
+/* ── FORM FEEDBACK ── */
+.form-ok { display: flex; align-items: center; gap: .9rem; background: rgba(34,197,94,.07); border: 1px solid rgba(34,197,94,.2); border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1rem; animation: up .35s ease }
+.form-ok i { font-size: 1.5rem; color: var(--green); flex-shrink: 0 }
+.form-ok strong { display: block; font-size: .95rem; font-weight: 700; color: var(--green) }
+.form-ok span { font-size: .85rem; color: var(--sub) }
+.form-err { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2); border-radius: 12px; padding: .9rem 1.3rem; margin-top: 1rem; color: var(--red); font-size: .88rem; font-weight: 600 }
 
-/* DIVIDER */
-body.light .divider{background:linear-gradient(90deg,transparent,rgba(0,100,200,.1),transparent)}
+/* ── TOAST ── */
+.toast { position: fixed; bottom: 1.8rem; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--surface); border: 1px solid var(--green); color: var(--green); padding: .62rem 1.4rem; border-radius: 100px; font-size: .84rem; font-weight: 600; z-index: 99999; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; white-space: nowrap }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0) }
+.toast.err { border-color: var(--red); color: var(--red) }
 
-/* FORM SUCCESS */
-body.light .form-success{background:linear-gradient(135deg,rgba(0,100,255,.06),rgba(0,150,255,.06));border-color:rgba(0,120,255,.25)}
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--line); max-width: 1060px; margin: 0 auto; position: relative; z-index: 1 }
 
-/* THEME TOGGLE */
-.theme-toggle{background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:1rem;padding:.3rem .55rem;cursor:pointer;transition:color .2s,border-color .2s;display:flex;align-items:center}
-.theme-toggle:hover{color:var(--cyan);border-color:var(--cyan)}
+/* ── FOOTER ── */
+footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--line); color: var(--sub); font-size: .82rem }
+footer a { color: var(--accent); text-decoration: none }
 
-/* TOAST */
-.toast{position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%) translateY(30px);background:var(--bg2);border:1px solid var(--green);color:var(--green);padding:.65rem 1.4rem;border-radius:100px;font-size:.83rem;font-weight:600;z-index:99999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.err{border-color:var(--red);color:var(--red)}
+/* ── ADMIN ── */
+.admin-panel { position: fixed; inset: 0; z-index: 9500; display: none; background: var(--bg); overflow-y: auto }
+.admin-panel.open { display: block }
+.admin-topbar { position: sticky; top: 0; z-index: 10; background: rgba(17,17,20,.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between }
+.admin-topbar h2 { font-size: .97rem; font-weight: 800; color: var(--text) }
+.admin-content { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem }
+.admin-tabs { display: flex; gap: .3rem; margin-bottom: 2rem; border-bottom: 1px solid var(--line); padding-bottom: .3rem; flex-wrap: wrap }
+.admin-tab { padding: .44rem 1.1rem; border-radius: 7px 7px 0 0; background: none; border: none; color: var(--sub); font-family: 'Heebo',sans-serif; font-size: .86rem; font-weight: 600; cursor: pointer; transition: .15s }
+.admin-tab.active { background: rgba(91,108,248,.1); color: var(--accent); border-bottom: 2px solid var(--accent) }
+.admin-tab-content { display: none }.admin-tab-content.active { display: block }
+.admin-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.6rem; margin-bottom: 1.2rem }
+.admin-card h3 { font-size: .97rem; font-weight: 700; margin-bottom: 1.3rem; color: var(--accent) }
+.admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem }
+.admin-group { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .85rem }
+.admin-group label { font-size: .78rem; font-weight: 600; color: var(--sub) }
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 1rem; margin-bottom: 1.2rem }
+.stat-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem; text-align: center }
+.stat-card-num { font-size: 1.8rem; font-weight: 900; color: var(--accent) }
+.stat-card-label { font-size: .74rem; color: var(--sub); margin-top: .2rem }
+.app-list-item { background: var(--bg); border: 1px solid var(--line); border-radius: 11px; padding: 1rem; display: flex; align-items: center; gap: .85rem; margin-bottom: .65rem }
+.app-list-emoji { font-size: 1.6rem; flex-shrink: 0 }
+.app-list-info { flex: 1; min-width: 0 }
+.app-list-name { font-weight: 700; font-size: .9rem }
+.app-list-cat { font-size: .68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px }
+.app-list-desc { font-size: .78rem; color: var(--sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.app-list-price { font-size: .78rem; font-weight: 700; color: var(--accent); white-space: nowrap }
+.app-list-actions { display: flex; gap: .4rem; flex-shrink: 0 }
 
-/* RESPONSIVE */
+/* ── OVERLAY ── */
+.overlay { position: fixed; inset: 0; z-index: 9000; display: none; background: rgba(0,0,0,.75); backdrop-filter: blur(8px); align-items: center; justify-content: center }
+.overlay.open { display: flex }
+.login-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 2.4rem 2.8rem; width: min(380px,90vw); text-align: center; animation: up .35s ease; position: relative }
+.login-box h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .4rem }
+.login-box p { color: var(--sub); font-size: .86rem; margin-bottom: 1.6rem }
+.login-icon { font-size: 2rem; color: var(--accent); margin-bottom: .8rem }
+.login-box input { text-align: center; letter-spacing: .2rem; font-size: 1rem; margin-bottom: .7rem; direction: ltr }
+.login-err { color: var(--red); font-size: .8rem; margin-bottom: .6rem; min-height: 1.1em }
+.login-close { position: absolute; top: .9rem; left: 1rem; background: none; border: none; color: var(--sub); font-size: 1.1rem; cursor: pointer; transition: color .15s }
+.login-close:hover { color: var(--text) }
+
+/* ── LIGHT MODE ── */
+body.light {
+  --bg: #fafafa; --surface: #fff; --line: #e4e4e8;
+  --text: #111114; --sub: #636370; --accent: #4f5fe6;
+}
+body.light nav { background: rgba(250,250,250,.88) }
+body.light input, body.light select, body.light textarea { background: #f4f4f7; color: #111114; border-color: #e0e0e6 }
+body.light select option { background: #fff; color: #111114 }
+body.light .admin-panel { background: var(--bg) }
+body.light .admin-topbar { background: rgba(250,250,250,.94) }
+body.light .overlay { background: rgba(200,200,210,.75) }
+body.light .login-box { background: #fff }
+body.light #hero::before { background: radial-gradient(ellipse at 50% 0%, rgba(79,95,230,.08) 0%, transparent 70%) }
+
+/* ── ANIMATIONS ── */
+@keyframes up { from { opacity:0; transform:translateY(14px) } to { opacity:1; transform:translateY(0) } }
+.reveal { opacity:0; transform:translateY(18px); transition: opacity .55s ease, transform .55s ease }
+.reveal.visible { opacity:1; transform:translateY(0) }
+
+/* ── RESPONSIVE ── */
 @media(max-width:768px){
-  .nav-links{display:none}.hamburger{display:flex}
-  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:64px;right:0;left:0;background:rgba(15,23,42,.97);backdrop-filter:blur(16px);padding:2rem;gap:1.5rem;border-bottom:1px solid var(--border)}
-  .form-row,.admin-form-row{grid-template-columns:1fr}
-  .contact-card{flex-direction:column;text-align:center}
-  .hero-stats{gap:1.5rem}
-  .app-list-item{flex-wrap:wrap}
+  nav { padding: 0 1.2rem }
+  .nav-links { display: none }
+  .hamburger { display: flex }
+  .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 60px; right: 0; left: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 1.5rem; gap: 1.4rem }
+  .frow, .admin-form-row, .contact-box { grid-template-columns: 1fr }
+  section { padding: 90px 1.2rem 50px }
+  .hero-h1 { letter-spacing: -1px }
 }
 </style>
 </head>
 <body>
 
-<canvas id="bgCanvas"></canvas>
-
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">MC</div>
+  <div class="logo">Y<span>Tech</span></div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">ראשי</a></li>
-    <li><a href="#pricing">מחירים</a></li>
+    <li><a href="#services">מחירים</a></li>
     <li><a href="apps.html">אפליקציות</a></li>
     <li><a href="#order">הזמנה</a></li>
     <li><a href="#contact">צור קשר</a></li>
   </ul>
   <div class="nav-right">
-    <button class="theme-toggle" id="themeToggle" title="מצב בהיר/כהה"><i class="fa-solid fa-moon"></i></button>
+    <button class="theme-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -348,177 +330,163 @@ body.light .form-success{background:linear-gradient(135deg,rgba(0,100,255,.06),r
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-badge"><i class="fa-solid fa-mobile-screen-button"></i> מפתח אנדרואיד מקצועי</div>
-  <h1 class="hero-title">YTech</h1>
-  <p class="hero-sub">פיתוח ותחזוקה של <span>מכשירי אנדרואיד</span><br/>שירות מהיר, מקצועי ובמחיר הוגן</p>
+  <p class="hero-eyebrow">פיתוח ותיקון אנדרואיד</p>
+  <h1 class="hero-h1">כל מה שהמכשיר שלך<br/>צריך – <span class="hl">במקום אחד</span></h1>
+  <p class="hero-p">רוט, צריבות, חסימות מתקדמות ותרגומים. שירות מהיר, מקצועי ובמחיר הוגן.</p>
   <div class="hero-btns">
-    <a href="#pricing" class="btn-primary"><i class="fa-solid fa-list"></i> ראה מחירים</a>
-    <a href="#order" class="btn-outline"><i class="fa-solid fa-phone"></i> הזמן שירות</a>
+    <a href="#services" class="btn btn-fill"><i class="fa-solid fa-list"></i> ראה מחירים</a>
+    <a href="#order" class="btn btn-line"><i class="fa-solid fa-phone"></i> הזמן שירות</a>
   </div>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">מכשירים טופלו</div></div>
-    <div class="stat"><div class="stat-num">7</div><div class="stat-label">שירותים מרכזיים</div></div>
-    <div class="stat"><div class="stat-num">24h</div><div class="stat-label">זמן תגובה</div></div>
-    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">שביעות רצון</div></div>
+    <div><div class="hs-n">500+</div><div class="hs-l">מכשירים טופלו</div></div>
+    <div><div class="hs-n">4</div><div class="hs-l">שירותים מרכזיים</div></div>
+    <div><div class="hs-n">24h</div><div class="hs-l">זמן תגובה</div></div>
+    <div><div class="hs-n">100%</div><div class="hs-l">שביעות רצון</div></div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- PRICING -->
-<section id="pricing">
-  <div class="reveal">
-    <div class="section-label"><i class="fa-solid fa-shekel-sign"></i> תעריפים</div>
-    <h2 class="section-title">השירותים <span>שלנו</span></h2>
-    <p class="section-desc">כל מחיר כולל ייעוץ מקצועי, עבודה מוקפדת ואחריות מלאה.</p>
+<!-- SERVICES -->
+<section id="services">
+  <div class="sh reveal">
+    <div class="sh-label">תעריפים</div>
+    <h2 class="sh-title">מה אני מציע</h2>
+    <p class="sh-desc">כל שירות כולל ייעוץ, עבודה מוקפדת ואחריות מלאה.</p>
   </div>
-  <div class="pricing-grid reveal">
-    <div class="card featured">
-      <div class="card-icon"><i class="fa-solid fa-lock-open"></i></div>
-      <div class="card-price">60<span>₪</span></div>
-      <div class="card-title">רוט</div>
-      <div class="card-short">הרשאות מלאות למכשיר</div>
-      <div class="card-desc">פתיחת הרשאות Root – גישה מלאה למערכת, מחיקת אפליקציות מובנות, והתאמות מתקדמות.</div>
-      <a href="#order" class="btn-primary" data-svc="1">הזמן עכשיו</a>
+  <div class="svc-grid reveal">
+    <div class="svc">
+      <div class="svc-icon-wrap"><i class="fa-solid fa-lock-open"></i></div>
+      <div class="svc-price-big">60 <small>₪</small></div>
+      <div class="svc-title">רוט</div>
+      <div class="svc-hint">הרשאות מלאות</div>
+      <div class="svc-desc-t">פתיחת הרשאות Root – גישה מלאה למערכת, מחיקת אפליקציות מובנות, והתאמות מתקדמות.</div>
+      <a href="#order" class="btn btn-fill btn-sm" data-svc="1">הזמן</a>
     </div>
-    <div class="card">
-      <div class="card-icon"><i class="fa-solid fa-fire"></i></div>
-      <div class="card-price">50<span>₪</span></div>
-      <div class="card-title">צריבת גרסה</div>
-      <div class="card-short">תיקון תוכנה מלא</div>
-      <div class="card-desc">צריבת ROM / Firmware ידנית – אידיאלי כאשר המכשיר תקוע, בלופ אתחול, או לאחר עדכון כושל.</div>
-      <a href="#order" class="btn-primary" data-svc="2">הזמן עכשיו</a>
+    <div class="svc">
+      <div class="svc-icon-wrap"><i class="fa-solid fa-fire"></i></div>
+      <div class="svc-price-big">50 <small>₪</small></div>
+      <div class="svc-title">צריבת גרסה</div>
+      <div class="svc-hint">תיקון תוכנה מלא</div>
+      <div class="svc-desc-t">צריבת ROM/Firmware ידנית – אידיאלי כאשר המכשיר תקוע, בלופ אתחול, או לאחר עדכון כושל.</div>
+      <a href="#order" class="btn btn-fill btn-sm" data-svc="2">הזמן</a>
     </div>
-    <div class="card">
-      <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
-      <div class="card-price">50<span>₪</span></div>
-      <div class="card-title">הכשרת נגנים</div>
-      <div class="card-short">חסימה הרמטית</div>
-      <div class="card-desc">הגדרת חסימות מתקדמות – למניעת גישה לאפליקציות, אתרים ושירותים לא רצויים.</div>
-      <a href="#order" class="btn-primary" data-svc="3">הזמן עכשיו</a>
+    <div class="svc">
+      <div class="svc-icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="svc-price-big">50 <small>₪</small></div>
+      <div class="svc-title">הכשרת נגנים</div>
+      <div class="svc-hint">חסימה הרמטית</div>
+      <div class="svc-desc-t">הגדרת חסימות מתקדמות – למניעת גישה לאפליקציות, אתרים ושירותים לא רצויים.</div>
+      <a href="#order" class="btn btn-fill btn-sm" data-svc="3">הזמן</a>
     </div>
-    <div class="card">
-      <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
-      <div class="card-price">10<span>₪</span></div>
-      <div class="card-title">תרגום אפליקציה</div>
-      <div class="card-short">התאמה לעברית</div>
-      <div class="card-desc">תרגום ממשק אפליקציה לעברית עם תמיכה ב-RTL מלא. שירות מהיר ומדויק.</div>
-      <a href="#order" class="btn-primary" data-svc="4">הזמן עכשיו</a>
+    <div class="svc">
+      <div class="svc-icon-wrap"><i class="fa-solid fa-globe"></i></div>
+      <div class="svc-price-big">10 <small>₪</small></div>
+      <div class="svc-title">תרגום אפליקציה</div>
+      <div class="svc-hint">התאמה לעברית</div>
+      <div class="svc-desc-t">תרגום ממשק אפליקציה לעברית עם תמיכה ב-RTL מלא. שירות מהיר ומדויק.</div>
+      <a href="#order" class="btn btn-fill btn-sm" data-svc="4">הזמן</a>
     </div>
   </div>
 </section>
-
 
 <div class="divider"></div>
 
 <!-- ORDER -->
-<section id="order" style="max-width:700px">
-  <div class="reveal">
-    <div class="section-label"><i class="fa-solid fa-clipboard-list"></i> הזמנה</div>
-    <h2 class="section-title">השאר <span>פרטים</span></h2>
-    <p class="section-desc">מלא את הטופס ואחזור אליך בהקדם.</p>
+<section id="order" style="max-width:660px">
+  <div class="sh reveal">
+    <div class="sh-label">הזמנה</div>
+    <h2 class="sh-title">השאר פרטים</h2>
+    <p class="sh-desc">מלא את הטופס ואחזור אליך תוך 24 שעות.</p>
   </div>
-  <div class="form-card reveal">
+  <div class="form-box reveal">
     <form id="orderForm">
-      <div class="form-row">
-        <div class="form-group"><label>שם פרטי</label><input type="text" name="שם_פרטי" placeholder="ישראל" required/></div>
-        <div class="form-group"><label>שם משפחה</label><input type="text" name="שם_משפחה" placeholder="ישראלי" required/></div>
+      <div class="frow">
+        <div class="fg"><label>שם פרטי</label><input type="text" name="שם_פרטי" placeholder="ישראל" required/></div>
+        <div class="fg"><label>שם משפחה</label><input type="text" name="שם_משפחה" placeholder="ישראלי" required/></div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>טלפון</label><input type="tel" name="טלפון" placeholder="050-0000000" required/></div>
-        <div class="form-group"><label>אימייל</label><input type="email" name="אימייל" placeholder="you@example.com" required/></div>
+      <div class="frow">
+        <div class="fg"><label>טלפון</label><input type="tel" name="טלפון" placeholder="050-0000000" required/></div>
+        <div class="fg"><label>אימייל</label><input type="email" name="אימייל" placeholder="you@example.com" required/></div>
       </div>
-      <div class="form-group">
-        <label>בחר שירות</label>
+      <div class="fg">
+        <label>שירות</label>
         <select id="serviceSelect" name="שירות" required>
           <option value="" disabled selected>-- בחר שירות --</option>
           <option value="רוט – 60₪">רוט – 60₪</option>
           <option value="צריבת גרסה – 50₪">צריבת גרסה – 50₪</option>
           <option value="הכשרת נגנים – 50₪">הכשרת נגנים – 50₪</option>
           <option value="תרגום אפליקציה – 10₪">תרגום אפליקציה – 10₪</option>
-          <option value="אחר">🔧 אחר</option>
+          <option value="אחר">אחר</option>
         </select>
       </div>
-      <div class="form-group"><label>דגם המכשיר</label><input type="text" name="דגם_מכשיר" placeholder="Samsung Galaxy S26"/></div>
-      <div class="form-group"><label>פרטים נוספים</label><textarea name="פרטים_נוספים" placeholder="תאר את הבעיה..."></textarea></div>
-      <button type="button" class="btn-primary" id="submitBtn" style="width:100%;justify-content:center" onclick="submitForm()"><i class="fa-solid fa-paper-plane"></i> שלח הזמנה</button>
-      <p class="form-note">✅ הטופס ישלח ישירות למייל. נחזור אליך תוך 24 שעות.</p>
-    <div id="formMsg" style="display:none"></div>
+      <div class="fg"><label>דגם המכשיר</label><input type="text" name="דגם_מכשיר" placeholder="Samsung Galaxy S25"/></div>
+      <div class="fg"><label>פרטים נוספים</label><textarea name="פרטים_נוספים" placeholder="תאר את הבעיה..."></textarea></div>
+      <button type="button" class="btn btn-fill" id="submitBtn" style="width:100%;justify-content:center" onclick="submitForm()">
+        <i class="fa-solid fa-paper-plane"></i> שלח הזמנה
+      </button>
+      <p class="form-note">הטופס ישלח ישירות למייל. נחזור אליך תוך 24 שעות.</p>
+      <div id="formMsg" style="display:none"></div>
     </form>
   </div>
 </section>
 
-
 <div class="divider"></div>
 
 <!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="reveal">
-    <div class="section-label"><i class="fa-solid fa-star"></i> המלצות</div>
-    <h2 class="section-title">מה אומרים <span>הלקוחות</span></h2>
-    <p class="section-desc">לקוחות מרוצים שקיבלו שירות מקצועי ומהיר.</p>
+<section id="testimonials" style="max-width:760px">
+  <div class="sh reveal">
+    <div class="sh-label">המלצות</div>
+    <h2 class="sh-title">מה אומרים הלקוחות</h2>
   </div>
   <div class="slider-wrapper reveal">
     <div class="slider-track" id="sliderTrack">
       <div class="slide">
         <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">עשה לי רוט לנגן M36 בלי שום בעיה. המכשיר עובד מעולה, שירות מהיר ומקצועי לגמרי. ממליץ בחום!</div>
-        <div class="slide-author">
-          <div class="slide-avatar"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">יוסי כהן</div><div class="slide-role">לקוח מרוצה</div></div>
-        </div>
+        <div class="slide-quote">עשה לי רוט לגלקסי S23 בלי שום בעיה. המכשיר עובד מעולה, שירות מהיר ומקצועי לגמרי. ממליץ בחום!</div>
+        <div class="slide-who"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-nm">יוסי כהן</div><div class="slide-role">לקוח מרוצה</div></div></div>
       </div>
       <div class="slide">
         <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">המכשיר שלי היה תקוע בלופ אתחול שבועיים, יאיר תיקן אותו תוך שנייה בצריבה. מדהים!</div>
-        <div class="slide-author">
-          <div class="slide-avatar"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">שירה לוי</div><div class="slide-role">לקוחה מרוצה</div></div>
-        </div>
+        <div class="slide-quote">המכשיר שלי היה תקוע בלופ אתחול שבועיים, YTech תיקן אותו תוך שעה בצריבה. מדהים!</div>
+        <div class="slide-who"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-nm">שירה לוי</div><div class="slide-role">לקוחה מרוצה</div></div></div>
       </div>
       <div class="slide">
         <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">ביקשתי הכשרת נגנים לטאבלט של הילדים. עבודה מדויקת, חסם בדיוק מה שביקשתי. שווה כל שקל!</div>
-        <div class="slide-author">
-          <div class="slide-avatar"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">דוד אברהם</div><div class="slide-role">לקוח מרוצה</div></div>
-        </div>
+        <div class="slide-quote">ביקשתי הכשרת נגנים לטאבלט של הילדים. עבודה מדויקת, חסם בדיוק מה שביקשתי. שווה כל שקל!</div>
+        <div class="slide-who"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-nm">דוד אברהם</div><div class="slide-role">לקוח מרוצה</div></div></div>
       </div>
       <div class="slide">
         <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">תרגם לי אפליקציה שלמה לעברית עם RTL מלא. התוצאה מקצועית לחלוטין, מחיר מצחיק של 10 שקל!</div>
-        <div class="slide-author">
-          <div class="slide-avatar"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">מיכל ברק</div><div class="slide-role">לקוחה מרוצה</div></div>
-        </div>
+        <div class="slide-quote">תרגם לי אפליקציה שלמה לעברית עם RTL מלא. התוצאה מקצועית לחלוטין, מחיר מצחיק של 10 שקל!</div>
+        <div class="slide-who"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-nm">מיכל ברק</div><div class="slide-role">לקוחה מרוצה</div></div></div>
       </div>
     </div>
   </div>
-  <div class="slider-controls">
-    <button class="slider-btn" id="sliderPrev">&#8592;</button>
-    <div class="slider-dots" id="sliderDots"></div>
-    <button class="slider-btn" id="sliderNext">&#8594;</button>
+  <div class="sl-ctrl">
+    <button class="sl-btn" id="sliderPrev">&#8592;</button>
+    <div class="sl-dots" id="sliderDots"></div>
+    <button class="sl-btn" id="sliderNext">&#8594;</button>
   </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- CONTACT -->
-<section id="contact" style="max-width:700px">
-  <div class="reveal">
-    <div class="section-label"><i class="fa-solid fa-envelope"></i> צור קשר</div>
-    <h2 class="section-title">נדבר <span>ישירות</span></h2>
+<section id="contact" style="max-width:680px">
+  <div class="sh reveal">
+    <div class="sh-label">צור קשר</div>
+    <h2 class="sh-title">נדבר ישירות</h2>
   </div>
-  <div class="contact-card reveal">
-    <div class="contact-info">
-      <h3>YTech</h3>
-      <p>מפתח אנדרואיד מקצועי – זמין לכל שאלה ושירות.</p>
-      <a href="mailto:130105630610a@gmail.com" class="contact-email"><i class="fa-solid fa-envelope"></i> 130105630610a@gmail.com</a>
+  <div class="contact-box reveal">
+    <div>
+      <div class="contact-title">YTech</div>
+      <div class="contact-sub">מפתח אנדרואיד מקצועי – זמין לכל שאלה ושירות.</div>
+      <a href="mailto:130105630610a@gmail.com" class="contact-mail"><i class="fa-solid fa-envelope"></i> 130105630610a@gmail.com</a>
     </div>
-    <div class="contact-actions">
-      <a href="https://mitmachim.top/user/%D7%9E%D7%92%D7%A0%D7%95%D7%A1-%D7%A7%D7%A8%D7%9C%D7%A1%D7%9F" target="_blank" class="btn-primary"><i class="fa-solid fa-comments"></i> מתמחים טופ</a>
-      <a href="https://tel: 0556720379" target="_blank" class="btn-outline"><i class="fa-solid fa-phone"></i> 055-6720379</a>
+    <div class="contact-btns">
+      <a href="https://mitmachim.top/user/%D7%9E%D7%92%D7%A0%D7%95%D7%A1-%D7%A7%D7%A8%D7%9C%D7%A1%D7%9F" target="_blank" class="btn btn-fill"><i class="fa-solid fa-comments"></i> מתמחים טופ</a>
+      <a href="tel:0556720379" class="btn btn-line"><i class="fa-solid fa-phone"></i> 055-6720379</a>
     </div>
   </div>
 </section>
@@ -526,169 +494,70 @@ body.light .form-success{background:linear-gradient(135deg,rgba(0,100,255,.06),r
 </div>
 
 <footer>
-  <p>© 2026 YTech. כל הזכויות שמורות.</p>
-  <p style="margin-top:.4rem">עוצב ופותח בישראל | <a href="#hero">חזור למעלה ↑</a></p>
+  <p>© 2026 YTech · <a href="#hero">חזור למעלה ↑</a></p>
 </footer>
 
-<!-- LOGIN OVERLAY -->
+<!-- LOGIN -->
 <div class="overlay" id="loginOverlay">
   <div class="login-box">
-    <button class="login-close" onclick="closeLogin()">✕</button>
+    <button class="login-close" onclick="closeLogin()"><i class="fa-solid fa-xmark"></i></button>
     <div class="login-icon"><i class="fa-solid fa-lock"></i></div>
     <h2>כניסת מנהל</h2>
     <p>הכנס את הסיסמה כדי לגשת לפאנל הניהול</p>
     <input type="password" id="pwInput" placeholder="••••••••" dir="ltr" autocomplete="off"/>
     <div class="login-err" id="loginErr"></div>
-    <button class="btn-primary" style="width:100%;justify-content:center" onclick="checkPass()"><i class="fa-solid fa-right-to-bracket"></i> כניסה</button>
+    <button class="btn btn-fill" style="width:100%;justify-content:center" onclick="checkPass()"><i class="fa-solid fa-right-to-bracket"></i> כניסה</button>
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
+<!-- ADMIN -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-topbar">
-    <h2>🛠️ פאנל ניהול – YTech</h2>
-    <button class="btn-outline btn-sm" onclick="closeAdmin()"><i class="fa-solid fa-xmark"></i> יציאה</button>
+    <h2>פאנל ניהול – YTech</h2>
+    <button class="btn btn-line btn-sm" onclick="closeAdmin()"><i class="fa-solid fa-xmark"></i> יציאה</button>
   </div>
   <div class="admin-content">
-
     <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab('dashboard',this)"><i class="fa-solid fa-chart-bar"></i> סקירה</button>
-      <button class="admin-tab" onclick="switchTab('addApp',this)"><i class="fa-solid fa-plus"></i> הוסף פרויקט</button>
-      <button class="admin-tab" onclick="switchTab('manageApps',this)"><i class="fa-solid fa-boxes-stacked"></i> ניהול פרויקטים</button>
+      <button class="admin-tab active" onclick="switchTab('dashboard',this)">סקירה</button>
+      <button class="admin-tab" onclick="switchTab('addApp',this)">הוסף פרויקט</button>
+      <button class="admin-tab" onclick="switchTab('manageApps',this)">ניהול פרויקטים</button>
     </div>
-
-    <!-- DASHBOARD -->
     <div class="admin-tab-content active" id="tab-dashboard">
       <div class="stats-row" id="adminStats"></div>
-      <div class="admin-card">
-        <h3>👋 ברוך הבא, YTech!</h3>
-        <p style="color:var(--muted);font-size:.88rem;line-height:1.7">
-          מכאן תוכל לנהל את כל האפליקציות והתוכנות שמוצגות באתר.<br/>
-          לחץ על <strong style="color:var(--cyan)">הוסף פרויקט</strong> כדי להוסיף תוכן חדש,<br/>
-          ועל <strong style="color:var(--cyan)">ניהול פרויקטים</strong> כדי לערוך או למחוק קיימים.
-        </p>
-      </div>
+      <div class="admin-card"><h3>ברוך הבא!</h3><p style="color:var(--sub);font-size:.9rem;line-height:1.7">מכאן תוכל לנהל את כל האפליקציות והתוכנות שמוצגות באתר.</p></div>
     </div>
-
-    <!-- ADD APP -->
     <div class="admin-tab-content" id="tab-addApp">
       <div class="admin-card">
-        <h3><i class="fa-solid fa-plus"></i> הוסף פרויקט חדש</h3>
+        <h3>הוסף פרויקט חדש</h3>
         <div class="admin-form-row">
-          <div class="admin-group"><label>שם הפרויקט *</label><input type="text" id="a_name" placeholder="RootMaster Pro"/></div>
-          <div class="admin-group">
-            <label>קטגוריה *</label>
-            <select id="a_cat">
-              <option value="אפליקציה">📱 אפליקציה</option>
-              <option value="תוכנה">💻 תוכנה</option>
-              <option value="כלי מפתח">🔧 כלי מפתח</option>
-              <option value="משחק">🎮 משחק</option>
-              <option value="אחר">📦 אחר</option>
-            </select>
-          </div>
+          <div class="admin-group"><label>שם *</label><input type="text" id="a_name" placeholder="RootMaster Pro"/></div>
+          <div class="admin-group"><label>קטגוריה *</label><select id="a_cat"><option value="אפליקציה">אפליקציה</option><option value="תוכנה">תוכנה</option><option value="כלי מפתח">כלי מפתח</option><option value="משחק">משחק</option><option value="אחר">אחר</option></select></div>
         </div>
         <div class="admin-form-row">
-          <div class="admin-group"><label>אימוג'י / סמל</label><input type="text" id="a_emoji" placeholder="📱" maxlength="4"/></div>
-          <div class="admin-group"><label>מחיר (ריק = חינמי)</label><input type="text" id="a_price" placeholder="15₪ או FREE"/></div>
+          <div class="admin-group"><label>אימוג'י</label><input type="text" id="a_emoji" placeholder="📱" maxlength="4"/></div>
+          <div class="admin-group"><label>מחיר (ריק = חינמי)</label><input type="text" id="a_price" placeholder="15₪"/></div>
         </div>
-        <div class="admin-group"><label>תיאור קצר *</label><input type="text" id="a_desc" placeholder="תיאור קצר של הפרויקט..."/></div>
-        <div class="admin-group"><label>קישור הורדה / חיצוני (אופציונלי)</label><input type="url" id="a_link" placeholder="https://..." dir="ltr"/></div>
-        <div class="admin-group"><label>תגיות (מופרדות בפסיקים)</label><input type="text" id="a_tags" placeholder="אנדרואיד, רוט, APK"/></div>
-        <div style="display:flex;gap:.7rem;flex-wrap:wrap">
-          <button class="btn-primary" onclick="addApp()"><i class="fa-solid fa-floppy-disk"></i> שמור פרויקט</button>
-          <button class="btn-outline btn-sm" onclick="clearAppForm()"><i class="fa-solid fa-trash"></i> נקה</button>
+        <div class="admin-group"><label>תיאור *</label><input type="text" id="a_desc" placeholder="תיאור קצר..."/></div>
+        <div class="admin-group"><label>קישור</label><input type="url" id="a_link" placeholder="https://..." dir="ltr"/></div>
+        <div class="admin-group"><label>תגיות</label><input type="text" id="a_tags" placeholder="אנדרואיד, רוט"/></div>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+          <button class="btn btn-fill btn-sm" onclick="addApp()"><i class="fa-solid fa-floppy-disk"></i> שמור</button>
+          <button class="btn btn-line btn-sm" onclick="clearAppForm()">נקה</button>
         </div>
       </div>
     </div>
-
-    <!-- MANAGE APPS -->
     <div class="admin-tab-content" id="tab-manageApps">
-      <div class="admin-card">
-        <h3>📦 כל הפרויקטים (<span id="appsCount">0</span>)</h3>
-        <div id="adminAppList"><p style="color:var(--muted);font-size:.86rem">אין פרויקטים עדיין.</p></div>
-      </div>
+      <div class="admin-card"><h3>פרויקטים (<span id="appsCount">0</span>)</h3><div id="adminAppList"><p style="color:var(--sub);font-size:.88rem">אין פרויקטים עדיין.</p></div></div>
     </div>
-
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── CANVAS BG ── */
-(function(){
-  const C=document.getElementById('bgCanvas'),ctx=C.getContext('2d');
-  let W,H,pts=[],mouse={x:-9999,y:-9999};
-  const CONNECT_DIST=160,MOUSE_DIST=200,BASE_SPEED=0.4,DOT_COLOR='0,150,200',BG_DARK='#07111f',BG_LIGHT='#e8eef5';
-
-  function resize(){
-    W=C.width=innerWidth;H=C.height=innerHeight;pts=[];
-    const n=Math.floor(W*H/9000);
-    for(let i=0;i<n;i++){
-      const x=Math.random()*W,y=Math.random()*H;
-      pts.push({x,y,vx:(Math.random()-.5)*BASE_SPEED*2,vy:(Math.random()-.5)*BASE_SPEED*2,r:Math.random()*0.9+0.3});
-    }
-  }
-  resize();
-  window.addEventListener('resize',resize);
-  window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
-  window.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999});
-
-  function draw(){
-    const BG=document.body.classList.contains('light')?BG_LIGHT:BG_DARK;
-    ctx.fillStyle=BG;
-    ctx.fillRect(0,0,W,H);
-
-    // cursor glow
-    if(mouse.x>-100){
-      const cg=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,130);
-      cg.addColorStop(0,`rgba(${DOT_COLOR},0.07)`);
-      cg.addColorStop(1,`rgba(${DOT_COLOR},0)`);
-      ctx.beginPath();ctx.arc(mouse.x,mouse.y,130,0,Math.PI*2);
-      ctx.fillStyle=cg;ctx.fill();
-    }
-
-    // dot-to-dot connections
-    for(let i=0;i<pts.length;i++){
-      for(let j=i+1;j<pts.length;j++){
-        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<CONNECT_DIST){
-          ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
-          ctx.strokeStyle=`rgba(${DOT_COLOR},${(1-d/CONNECT_DIST)*0.32})`;
-          ctx.lineWidth=0.8;ctx.stroke();
-        }
-      }
-      // cursor acts as a virtual dot – draw connecting lines to nearby dots
-      const cdx=pts[i].x-mouse.x,cdy=pts[i].y-mouse.y;
-      const cd=Math.sqrt(cdx*cdx+cdy*cdy);
-      if(cd<MOUSE_DIST){
-        ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(mouse.x,mouse.y);
-        ctx.strokeStyle=`rgba(${DOT_COLOR},${(1-cd/MOUSE_DIST)*0.45})`;
-        ctx.lineWidth=0.9;ctx.stroke();
-      }
-    }
-
-    // update & draw dots – no mouse attraction, pure free movement
-    for(const p of pts){
-      const spd=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
-      if(spd<BASE_SPEED*0.5){p.vx+=(Math.random()-.5)*0.05;p.vy+=(Math.random()-.5)*0.05;}
-      if(spd>BASE_SPEED){p.vx=p.vx/spd*BASE_SPEED;p.vy=p.vy/spd*BASE_SPEED;}
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0){p.x=0;p.vx*=-1;}if(p.x>W){p.x=W;p.vx*=-1;}
-      if(p.y<0){p.y=0;p.vy*=-1;}if(p.y>H){p.y=H;p.vy*=-1;}
-
-      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.5);
-      g.addColorStop(0,`rgba(${DOT_COLOR},0.6)`);g.addColorStop(1,`rgba(${DOT_COLOR},0)`);
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r*2.2,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(${DOT_COLOR},1)`;ctx.fill();
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
 
 
+/* canvas disabled */
 /* ── NAV ── */
 const hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
 hamburger.addEventListener('click',()=>navLinks.classList.toggle('open'));
@@ -811,14 +680,14 @@ function switchTab(id,el){
   // build dots
   slides.forEach((_,i)=>{
     const d=document.createElement('div');
-    d.className='slider-dot'+(i===0?' active':'');
+    d.className='sl-dot'+(i===0?' active':'');
     d.addEventListener('click',()=>goTo(i));
     dotsEl.appendChild(d);
   });
   function goTo(n){
     cur=(n+slides.length)%slides.length;
     track.style.transform=`translateX(${cur*100}%)`;
-    dotsEl.querySelectorAll('.slider-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+    dotsEl.querySelectorAll('.sl-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
     resetTimer();
   }
   function resetTimer(){clearInterval(timer);timer=setInterval(()=>goTo(cur+1),4500)}
@@ -846,7 +715,7 @@ async function submitForm(){
   let valid=true;
   required.forEach(f=>{if(!f.value.trim()){f.style.borderColor='var(--red)';valid=false;}else{f.style.borderColor=''}});
   if(!valid){
-    msg.innerHTML='<div class="form-error">❌ אנא מלא את כל השדות הנדרשים</div>';
+    msg.innerHTML='<div class="form-err">❌ אנא מלא את כל השדות הנדרשים</div>';
     msg.style.display='block';
     return;
   }
@@ -865,9 +734,9 @@ async function submitForm(){
     if(res.ok){
       form.reset();
       msg.innerHTML=`
-        <div class="form-success">
-          <div class="form-success-icon">✅</div>
-          <div class="form-success-text">
+        <div class="form-ok">
+          <i class="fa-solid fa-circle-check"></i>
+          <div class="">
             <strong>הפנייה נשלחה בהצלחה!</strong>
             <span>תודה שפנית אלינו – נחזור אליך תוך 24 שעות 🚀</span>
           </div>
@@ -879,7 +748,7 @@ async function submitForm(){
       throw new Error('שגיאה');
     }
   }catch(e){
-    msg.innerHTML='<div class="form-error">❌ שגיאה בשליחה. נסה שוב מאוחר יותר.</div>';
+    msg.innerHTML='<div class="form-err">❌ שגיאה בשליחה. נסה שוב מאוחר יותר.</div>';
     msg.style.display='block';
     btn.textContent='📤 שלח הזמנה';
     btn.disabled=false;
@@ -902,6 +771,8 @@ async function submitForm(){
 })();
 
 /* INIT */
+
+
 </script>
 </body>
 </html>
