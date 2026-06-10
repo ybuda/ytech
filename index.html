@@ -6,359 +6,449 @@
 <title>YTech – תיקון ופיתוח אנדרואיד</title>
 <link rel="icon" type="image/x-icon" href="favsion.ico?v=3"/>
 <link rel="shortcut icon" type="image/x-icon" href="favsion.ico?v=3"/>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
-html { scroll-behavior: smooth }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 
-:root {
-  --bg:    #0e0718;
-  --bg2:   #12121a;
-  --bg3:   #1a1a26;
-  --text:  #f0eeff;
-  --muted: #8a8aaa;
-  --purple: #8b5cf6;
-  --pink:   #ec4899;
-  --orange: #f97316;
-  --cyan:   #22d3ee;
-  --green:  #4ade80;
-  --yellow: #facc15;
-  --border: rgba(255,255,255,.07);
-  --r: 14px;
+:root{
+  --bg:#080810;
+  --glass:rgba(255,255,255,.04);
+  --glass2:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.08);
+  --text:#f4f0ff;
+  --muted:#8878aa;
+  --p:#a855f7;
+  --p2:#7c3aed;
+  --pk:#ec4899;
+  --cy:#22d3ee;
+  --or:#f97316;
+  --gr:#4ade80;
+  --ye:#facc15;
 }
 
-body {
-  font-family: 'Heebo', sans-serif;
-  background: #0d0a18;
-  color: var(--text);
-  direction: rtl;
-  overflow-x: hidden;
-  line-height: 1.6;
-  transition: background 1.6s ease;
+body{
+  font-family:'Heebo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  direction:rtl;
+  overflow-x:hidden;
+  line-height:1.6;
 }
 
-/* scrollbar */
-
-
-
-/* ── AURORA BACKGROUND ── */
-#aurora {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  overflow: hidden;
-  transform: translateZ(0);
+/* ── GRAIN + BG ── */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#bg-grad{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(124,58,237,.2) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 55% at 85% 80%, rgba(236,72,153,.14) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 55% 45%, rgba(34,211,238,.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 45% at 80% 15%, rgba(249,115,22,.1) 0%, transparent 50%);
+  animation:bgShift 20s ease-in-out infinite alternate;
 }
-.aurora-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.5;
-  will-change: transform, background;
-  transform: translateZ(0);
+@keyframes bgShift{
+  0%{filter:hue-rotate(0deg)}
+  100%{filter:hue-rotate(40deg)}
 }
-.ab1 { width:70vw;height:70vw; top:-15%;right:-10%; animation:move1 10s ease-in-out infinite alternate }
-.ab2 { width:65vw;height:65vw; bottom:-15%;left:-10%; animation:move2 13s ease-in-out infinite alternate }
-.ab3 { width:60vw;height:60vw; top:20%;left:20%;    animation:move3 15s ease-in-out infinite alternate }
-.ab4 { width:55vw;height:55vw; bottom:10%;right:10%; animation:move4 11s ease-in-out infinite alternate }
-
-@keyframes move1{0%{transform:translate(0,0)}100%{transform:translate(-20vw,25vh)}}
-@keyframes move2{0%{transform:translate(0,0)}100%{transform:translate(25vw,-20vh)}}
-@keyframes move3{0%{transform:translate(0,0)}100%{transform:translate(15vw,20vh)}}
-@keyframes move4{0%{transform:translate(0,0)}100%{transform:translate(-15vw,-15vh)}}
-
-#aurora::after {
-  content:''; position:absolute; inset:0;
-  background:rgba(8,5,18,.58);
+#bg-grain{
+  position:absolute;inset:0;opacity:.15;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:160px;
 }
-body.light #aurora::after { background:rgba(255,255,255,.62) }
-body.light .aurora-blob { opacity:0.35 }
+#bg::after{content:'';position:absolute;inset:0;background:rgba(8,8,16,.5)}
 
-::-webkit-scrollbar { width: 4px }
-::-webkit-scrollbar-track { background: var(--bg) }
-::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px }
-
-/* ── BACKGROUND ── */
-
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--p);border-radius:3px}
 
 /* ── NAV ── */
-nav {
-  position: fixed; top: 0; right: 0; left: 0; z-index: 900;
-  padding: 0 2rem; height: 60px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(11,11,16,.75);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+nav{
+  position:fixed;top:1.2rem;right:50%;transform:translateX(50%);
+  z-index:900;
+  display:flex;align-items:center;gap:1rem;
+  background:rgba(20,16,32,.75);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:.55rem .55rem .55rem 1.4rem;
 }
-.logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.25rem; font-weight: 700;
-  background: linear-gradient(90deg, var(--purple), var(--pink));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+.nav-logo{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.1rem;font-weight:800;letter-spacing:-.5px;
+  background:linear-gradient(90deg,var(--p),var(--pk));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-left:.5rem;
 }
-.nav-links { display: flex; gap: 1.8rem; list-style: none }
-.nav-links a { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; transition: color .2s }
-.nav-links a:hover { color: var(--text) }
-.nav-right { display: flex; align-items: center; gap: .6rem }
-.theme-btn {
-  background: none; border: 1px solid var(--border); border-radius: 8px;
-  color: var(--muted); font-size: .95rem; padding: .3rem .58rem; cursor: pointer;
-  display: flex; align-items: center; transition: color .2s, border-color .2s;
+.nav-links{display:flex;gap:.25rem;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;
+  padding:.38rem .85rem;border-radius:100px;transition:background .2s,color .2s;
 }
-.theme-btn:hover { color: var(--purple); border-color: rgba(139,92,246,.4) }
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none }
-.hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px }
+.nav-links a:hover{background:var(--glass2);color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:.4rem;margin-right:.3rem}
+.nav-icon-btn{
+  width:34px;height:34px;border-radius:50%;background:var(--glass2);border:1px solid var(--border);
+  color:var(--muted);font-size:.82rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:color .2s,border-color .2s;
+}
+.nav-icon-btn:hover{color:var(--p);border-color:rgba(168,85,247,.4)}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:none;border:none;padding:.5rem}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--text);border-radius:2px}
 
 /* ── PAGE ── */
-.page { position: relative; z-index: 1 }
-section { max-width: 1040px; margin: 0 auto; padding: 100px 2rem 60px; text-align: center }
+.page{position:relative;z-index:1}
+section{max-width:1100px;margin:0 auto;padding:110px 2rem 70px}
 
 /* ── HERO ── */
-#hero {
-  min-height: 100vh; max-width: 100%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 120px 2rem 80px; text-align: center;
+#hero{
+  min-height:100vh;max-width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:140px 2rem 80px;
+  position:relative;
 }
-.hero-pill {
-  display: inline-flex; align-items: center; gap: .5rem;
-  font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  padding: .38rem 1rem; border-radius: 100px; margin-bottom: 1.8rem;
-  background: rgba(139,92,246,.12); border: 1px solid rgba(139,92,246,.3); color: var(--purple);
+.hero-label{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--p);margin-bottom:1.5rem;
+  background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.25);
+  padding:.35rem 1rem;border-radius:100px;
+  opacity:0;animation:fadeUp .6s .1s ease forwards;
 }
-.hero-h1 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.6rem, 7vw, 5.2rem);
-  font-weight: 700; line-height: 1.1; letter-spacing: -2px;
-  margin-bottom: 1.3rem;
+.hero-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(3rem,9vw,7rem);
+  font-weight:800;line-height:1.02;letter-spacing:-3px;
+  margin-bottom:1.4rem;
+  opacity:0;animation:fadeUp .7s .25s ease forwards;
 }
-.hero-h1 .c1 { color: var(--text) }
-.hero-h1 .c2 { color: var(--purple) }
-.hero-h1 .c3 { color: var(--pink) }
-.hero-h1 .c4 { color: var(--orange) }
-.hero-sub { font-size: 1.1rem; color: var(--muted); line-height: 1.8; max-width: 500px; margin: 0 auto 2.2rem }
-.hero-btns { display: flex; gap: .9rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem }
-.hero-stats {
-  display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
-  padding-top: 2.5rem; border-top: 1px solid var(--border);
+.hero-title .line1{display:block;color:var(--text)}
+.hero-title .line2{
+  display:block;
+  background:linear-gradient(90deg,var(--p),var(--pk),var(--or));
+  background-size:200%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:gradMove 4s linear infinite;
 }
-.hs { text-align: center }
-.hs-n { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; line-height: 1 }
-.hs-l { font-size: .8rem; color: var(--muted); margin-top: .2rem }
+@keyframes gradMove{0%{background-position:0%}100%{background-position:200%}}
+.hero-desc{
+  font-size:1.1rem;color:var(--muted);line-height:1.8;
+  max-width:480px;margin:0 auto 2.2rem;
+  opacity:0;animation:fadeUp .7s .4s ease forwards;
+}
+.hero-cta{
+  display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .7s .55s ease forwards;
+}
+.hero-bar{
+  display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;
+  margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--border);
+  opacity:0;animation:fadeUp .7s .7s ease forwards;
+}
+.hb{text-align:center}
+.hb-n{font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;line-height:1}
+.hb-l{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MARQUEE ── */
+.mq-wrap{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);overflow:hidden;padding:.55rem 0;
+  position:relative;z-index:2;
+}
+.mq-track{display:flex;white-space:nowrap;animation:mqRun 25s linear infinite}
+.mq-track:hover{animation-play-state:paused}
+.mq-item{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 2rem}
+.mq-item i{color:var(--p);margin-left:.4rem}
+@keyframes mqRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ── BUTTONS ── */
-.btn {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .75rem 1.6rem; border-radius: 10px;
-  font-family: 'Heebo', sans-serif; font-size: .95rem; font-weight: 700;
-  border: none; cursor: pointer; text-decoration: none; transition: transform .15s, box-shadow .15s;
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.75rem 1.6rem;border-radius:12px;
+  font-family:'Heebo',sans-serif;font-size:.92rem;font-weight:700;
+  border:none;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s,opacity .15s;
 }
-.btn:hover { transform: translateY(-2px) }
-.btn-purple { background: var(--purple); color: #fff; box-shadow: 0 4px 20px rgba(139,92,246,.35) }
-.btn-purple:hover { box-shadow: 0 8px 28px rgba(139,92,246,.5) }
-.btn-pink { background: var(--pink); color: #fff; box-shadow: 0 4px 20px rgba(236,72,153,.3) }
-.btn-pink:hover { box-shadow: 0 8px 28px rgba(236,72,153,.45) }
-.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border) !important; box-shadow: none }
-.btn-outline:hover { background: rgba(255,255,255,.05) }
-.btn-ghost { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid var(--border) }
-.btn-ghost:hover { background: rgba(255,255,255,.1) }
-.btn-sm { padding: .42rem .9rem; font-size: .82rem; border-radius: 8px }
-.btn-danger { background: rgba(239,68,68,.1); color: #f87171; border: 1px solid rgba(239,68,68,.2) !important; font-family: 'Heebo', sans-serif; font-size: .84rem; font-weight: 600; cursor: pointer; border-radius: 8px; padding: .42rem .9rem; transition: background .2s }
-.btn-danger:hover { background: rgba(239,68,68,.2) }
+.btn:hover{transform:translateY(-2px);opacity:.9}
+.btn-glow{
+  background:linear-gradient(135deg,var(--p2),var(--p));
+  color:#fff;box-shadow:0 4px 24px rgba(168,85,247,.35);
+}
+.btn-glow:hover{box-shadow:0 8px 32px rgba(168,85,247,.5)}
+.btn-glass{
+  background:var(--glass2);color:var(--text);
+  border:1px solid var(--border)!important;box-shadow:none;
+}
+.btn-glass:hover{background:rgba(255,255,255,.1)}
+.btn-pk{background:linear-gradient(135deg,var(--pk),var(--p));color:#fff;box-shadow:0 4px 20px rgba(236,72,153,.3)}
+.btn-or{background:linear-gradient(135deg,var(--or),var(--ye));color:#111}
+.btn-cy{background:linear-gradient(135deg,#0891b2,var(--cy));color:#111}
+.btn-sm{padding:.42rem .9rem;font-size:.82rem;border-radius:9px}
+.btn-danger{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2)!important;font-family:'Heebo',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;border-radius:9px;padding:.42rem .9rem;transition:background .2s}
+.btn-danger:hover{background:rgba(248,113,113,.2)}
 
 /* ── SECTION HEADER ── */
-.sec-chip {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  padding: .3rem .85rem; border-radius: 100px; margin-bottom: .8rem;
+.sec-eyebrow{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .85rem;border-radius:100px;margin-bottom:.9rem;
 }
-.chip-purple { background: rgba(139,92,246,.12); border: 1px solid rgba(139,92,246,.25); color: var(--purple) }
-.chip-pink   { background: rgba(236,72,153,.1);  border: 1px solid rgba(236,72,153,.25); color: var(--pink) }
-.chip-orange { background: rgba(249,115,22,.1);  border: 1px solid rgba(249,115,22,.25); color: var(--orange) }
-.chip-cyan   { background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.2);  color: var(--cyan) }
-.sec-h2 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(1.7rem, 3.5vw, 2.5rem); font-weight: 700;
-  line-height: 1.18; letter-spacing: -.5px; margin-bottom: .75rem;
+.ey-p{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.22);color:var(--p)}
+.ey-pk{background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.22);color:var(--pk)}
+.ey-cy{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.18);color:var(--cy)}
+.ey-or{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);color:var(--or)}
+.ey-gr{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.18);color:var(--gr)}
+.sec-h{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;
+  letter-spacing:-.5px;line-height:1.15;margin-bottom:.7rem;
 }
-.sec-desc { color: var(--muted); font-size: 1rem; line-height: 1.75; max-width: 480px; margin: 0 auto 2.5rem }
+.sec-sub{color:var(--muted);font-size:1rem;line-height:1.75;max-width:480px;margin:0 auto 2.5rem}
 
-/* ── SERVICES ── */
-.svcs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; text-align: right }
-.svc {
-  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 1.6rem; display: flex; flex-direction: column; gap: .75rem;
-  transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden;
+/* ── BENTO SERVICES ── */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:1rem}
+.bcard{
+  background:var(--glass);border:1px solid var(--border);border-radius:20px;
+  padding:1.8rem;display:flex;flex-direction:column;gap:.75rem;
+  position:relative;overflow:hidden;transition:transform .25s,border-color .25s;
+  backdrop-filter:blur(10px);
 }
-.svc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px }
-.svc:nth-child(1)::before { background: linear-gradient(90deg, var(--purple), var(--pink)) }
-.svc:nth-child(2)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)) }
-.svc:nth-child(3)::before { background: linear-gradient(90deg, var(--cyan), var(--green)) }
-.svc:nth-child(4)::before { background: linear-gradient(90deg, var(--pink), var(--purple)) }
-.svc:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.3) }
-.svc-ico { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem }
-.svc:nth-child(1) .svc-ico { background: rgba(139,92,246,.15); color: var(--purple) }
-.svc:nth-child(2) .svc-ico { background: rgba(249,115,22,.12); color: var(--orange) }
-.svc:nth-child(3) .svc-ico { background: rgba(34,211,238,.1);  color: var(--cyan) }
-.svc:nth-child(4) .svc-ico { background: rgba(236,72,153,.1);  color: var(--pink) }
-.svc-price { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; line-height: 1; color: var(--text) }
-.svc-price sub { font-size: .95rem; color: var(--muted); font-weight: 500 }
-.svc-name { font-size: 1.05rem; font-weight: 700 }
-.svc-tag { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em }
-.svc:nth-child(1) .svc-tag { color: var(--purple) }
-.svc:nth-child(2) .svc-tag { color: var(--orange) }
-.svc:nth-child(3) .svc-tag { color: var(--cyan) }
-.svc:nth-child(4) .svc-tag { color: var(--pink) }
-.svc-desc { font-size: .87rem; color: var(--muted); line-height: 1.65; flex: 1 }
+.bcard::before{content:'';position:absolute;inset:0;border-radius:20px;opacity:0;transition:opacity .3s;background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.06),transparent 70%)}
+.bcard:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.15)}
+.bcard:hover::before{opacity:1}
+.bcard.span2{grid-column:span 2}
+.bcard.tall{grid-row:span 2}
+.bcard-accent{position:absolute;top:0;right:0;left:0;height:2px;border-radius:20px 20px 0 0}
+.bcard-ico{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.05rem}
+.bcard-price{font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:800;line-height:1}
+.bcard-price sub{font-size:1rem;font-weight:500;color:var(--muted)}
+.bcard-name{font-size:1rem;font-weight:700}
+.bcard-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.bcard-desc{font-size:.84rem;color:var(--muted);line-height:1.65;flex:1}
+
+/* card accent colors */
+.bc-p .bcard-accent{background:linear-gradient(90deg,var(--p2),var(--p))}
+.bc-p .bcard-ico{background:rgba(168,85,247,.12);color:var(--p)}
+.bc-p .bcard-tag{color:var(--p)}
+.bc-pk .bcard-accent{background:linear-gradient(90deg,var(--pk),var(--p))}
+.bc-pk .bcard-ico{background:rgba(236,72,153,.1);color:var(--pk)}
+.bc-pk .bcard-tag{color:var(--pk)}
+.bc-or .bcard-accent{background:linear-gradient(90deg,var(--or),var(--ye))}
+.bc-or .bcard-ico{background:rgba(249,115,22,.1);color:var(--or)}
+.bc-or .bcard-tag{color:var(--or)}
+.bc-cy .bcard-accent{background:linear-gradient(90deg,#0891b2,var(--cy))}
+.bc-cy .bcard-ico{background:rgba(34,211,238,.08);color:var(--cy)}
+.bc-cy .bcard-tag{color:var(--cy)}
+
+/* ── PROCESS ── */
+.proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;position:relative}
+.proc-grid::before{content:'';position:absolute;top:28px;right:16%;left:16%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);pointer-events:none}
+.proc-card{text-align:center;padding:1.6rem 1rem;background:var(--glass);border:1px solid var(--border);border-radius:18px;backdrop-filter:blur(8px)}
+.proc-num{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;position:relative;z-index:1}
+.pn1{background:rgba(168,85,247,.12);color:var(--p);border:1.5px solid rgba(168,85,247,.25)}
+.pn2{background:rgba(236,72,153,.1);color:var(--pk);border:1.5px solid rgba(236,72,153,.22)}
+.pn3{background:rgba(34,211,238,.08);color:var(--cy);border:1.5px solid rgba(34,211,238,.18)}
+.proc-title{font-weight:700;font-size:.98rem;margin-bottom:.4rem}
+.proc-desc{font-size:.84rem;color:var(--muted);line-height:1.65}
 
 /* ── FORM ── */
-.form-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 2.2rem; text-align: right }
-.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem }
-.f-group { display: flex; flex-direction: column; gap: .38rem; margin-bottom: .9rem }
-.f-group label { font-size: .84rem; font-weight: 600; color: var(--muted) }
-input, select, textarea {
-  background: var(--bg3); border: 1px solid var(--border); border-radius: 9px;
-  padding: .7rem 1rem; color: var(--text); font-family: 'Heebo', sans-serif;
-  font-size: .95rem; direction: rtl; outline: none; width: 100%;
-  transition: border-color .2s, box-shadow .2s;
+.form-glass{
+  background:var(--glass);border:1px solid var(--border);border-radius:22px;
+  padding:2.2rem;backdrop-filter:blur(12px);text-align:right;
 }
-input:focus, select:focus, textarea:focus {
-  border-color: rgba(139,92,246,.5); box-shadow: 0 0 0 3px rgba(139,92,246,.1);
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.9rem}
+.fg-group label{font-size:.82rem;font-weight:600;color:var(--muted)}
+input,select,textarea{
+  background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;
+  padding:.7rem 1rem;color:var(--text);font-family:'Heebo',sans-serif;font-size:.92rem;
+  direction:rtl;outline:none;width:100%;transition:border-color .2s,box-shadow .2s;
 }
-select option { background: var(--bg2) }
-textarea { resize: vertical; min-height: 88px }
-.f-note { font-size: .8rem; color: var(--muted); margin-top: .55rem }
+input:focus,select:focus,textarea:focus{
+  border-color:rgba(168,85,247,.5);box-shadow:0 0 0 3px rgba(168,85,247,.1);
+}
+select option{background:#16101f;color:var(--text)}
+textarea{resize:vertical;min-height:88px}
+.fg-note{font-size:.78rem;color:var(--muted);margin-top:.6rem}
 
 /* ── TESTIMONIALS ── */
-.slider-wrapper { border-radius: 18px; overflow: hidden; text-align: right }
-.slider-track { display: flex; transition: transform .5s cubic-bezier(.4,0,.2,1) }
-.slide { min-width: 100%; padding: 2rem 2.3rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; display: flex; flex-direction: column; gap: 1rem }
-.slide-stars { color: var(--yellow); font-size: .95rem; letter-spacing: 2px }
-.slide-text { font-size: 1rem; color: var(--text); line-height: 1.8; font-style: italic }
-.slide-author { display: flex; align-items: center; gap: .85rem }
-.slide-av { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .95rem; color: #fff; flex-shrink: 0; background: linear-gradient(135deg, var(--purple), var(--pink)) }
-.slide-name { font-weight: 700; font-size: .92rem }
-.slide-role { font-size: .76rem; color: var(--muted) }
-.slider-controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.2rem }
-.slider-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--bg2); border: 1px solid var(--border); color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: .95rem; transition: color .2s, border-color .2s, transform .2s }
-.slider-btn:hover { color: var(--purple); border-color: rgba(139,92,246,.4); transform: scale(1.1) }
-.slider-dots { display: flex; gap: .45rem }
-.slider-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background .3s, transform .3s }
-.slider-dot.active { background: var(--purple); transform: scale(1.35) }
+.slider-wrapper{border-radius:20px;overflow:hidden}
+.slider-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.slide{
+  min-width:100%;padding:2rem 2.3rem;
+  background:var(--glass);border:1px solid var(--border);border-radius:20px;
+  display:flex;flex-direction:column;gap:1rem;backdrop-filter:blur(12px);
+}
+.slide-stars{color:var(--ye);font-size:.95rem;letter-spacing:2px}
+.slide-text{font-size:1rem;color:var(--text);line-height:1.8;font-style:italic}
+.slide-text::before,.slide-text::after{font-size:2rem;color:var(--p);line-height:0;vertical-align:-.45em}
+.slide-text::before{content:'"';margin-left:.3rem}
+.slide-text::after{content:'"';margin-right:.3rem}
+.slide-author{display:flex;align-items:center;gap:.85rem}
+.slide-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:#fff;flex-shrink:0;background:linear-gradient(135deg,var(--p2),var(--pk))}
+.slide-name{font-weight:700;font-size:.92rem}
+.slide-role{font-size:.76rem;color:var(--muted)}
+.slider-controls{display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:1.2rem}
+.slider-btn{width:36px;height:36px;border-radius:50%;background:var(--glass);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:color .2s,border-color .2s,transform .2s}
+.slider-btn:hover{color:var(--p);border-color:rgba(168,85,247,.4);transform:scale(1.1)}
+.slider-dots{display:flex;gap:.45rem}
+.slider-dot{width:7px;height:7px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .3s,transform .3s}
+.slider-dot.active{background:var(--p);transform:scale(1.35)}
+
+/* ── FAQ ── */
+.faq-list{text-align:right;max-width:680px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Heebo',sans-serif;font-size:.98rem;font-weight:600;padding:1.2rem 0;display:flex;align-items:center;justify-content:space-between;cursor:pointer;gap:1rem;text-align:right}
+.faq-q i{color:var(--p);font-size:.78rem;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-q i{transform:rotate(180deg)}
+.faq-a{font-size:.9rem;color:var(--muted);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:1.2rem}
 
 /* ── CONTACT ── */
-.contact-box {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
-  background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 2.2rem; text-align: right;
+.contact-glass{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;
+  background:var(--glass);border:1px solid var(--border);border-radius:22px;
+  padding:2.2rem;backdrop-filter:blur(12px);text-align:right;
 }
-.contact-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.45rem; font-weight: 700; margin-bottom: .45rem }
-.contact-desc { color: var(--muted); font-size: .92rem; line-height: 1.7 }
-.contact-mail { display: inline-flex; align-items: center; gap: .45rem; color: var(--cyan); font-weight: 600; text-decoration: none; font-size: .92rem; margin-top: .7rem; transition: opacity .2s }
-.contact-mail:hover { opacity: .75 }
-.contact-btns { display: flex; flex-direction: column; gap: .7rem }
+.cn-name{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:.45rem}
+.cn-desc{color:var(--muted);font-size:.92rem;line-height:1.7}
+.cn-mail{display:inline-flex;align-items:center;gap:.45rem;color:var(--cy);font-weight:600;text-decoration:none;font-size:.92rem;margin-top:.7rem;transition:opacity .2s}
+.cn-mail:hover{opacity:.75}
+.cn-btns{display:flex;flex-direction:column;gap:.7rem}
 
 /* ── FORM FEEDBACK ── */
-.form-ok { display: flex; align-items: center; gap: .9rem; background: rgba(74,222,128,.07); border: 1px solid rgba(74,222,128,.22); border-radius: 12px; padding: 1rem 1.3rem; margin-top: 1rem }
-.form-ok i { font-size: 1.5rem; color: var(--green); flex-shrink: 0 }
-.form-ok strong { display: block; font-size: .95rem; color: var(--green) }
-.form-ok span { font-size: .84rem; color: var(--muted) }
-.form-err { background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.22); border-radius: 12px; padding: .9rem 1.2rem; margin-top: 1rem; color: #f87171; font-size: .88rem; font-weight: 600 }
+.form-ok{display:flex;align-items:center;gap:.9rem;background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.22);border-radius:12px;padding:1rem 1.3rem;margin-top:1rem}
+.form-ok i{font-size:1.5rem;color:var(--gr);flex-shrink:0}
+.form-ok strong{display:block;font-size:.95rem;color:var(--gr)}
+.form-ok span{font-size:.84rem;color:var(--muted)}
+.form-err{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.22);border-radius:12px;padding:.9rem 1.2rem;margin-top:1rem;color:#f87171;font-size:.88rem;font-weight:600}
 
 /* ── TOAST ── */
-.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--bg2); border: 1px solid var(--green); color: var(--green); padding: .65rem 1.5rem; border-radius: 100px; font-size: .86rem; font-weight: 600; z-index: 99999; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; white-space: nowrap }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0) }
-.toast.err { border-color: #f87171; color: #f87171 }
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(20,16,32,.95);border:1px solid var(--gr);color:var(--gr);padding:.65rem 1.5rem;border-radius:100px;font-size:.86rem;font-weight:600;z-index:99999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;backdrop-filter:blur(16px)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{border-color:#f87171;color:#f87171}
+
+/* ── FLOATING CONTACT ── */
+.float-btn{
+  position:fixed;bottom:2rem;left:2rem;z-index:800;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--p2),var(--pk));
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;color:#fff;
+  box-shadow:0 4px 20px rgba(168,85,247,.4);
+  transition:transform .2s,box-shadow .2s;
+  animation:floatPulse 3s ease-in-out infinite;
+}
+.float-btn:hover{transform:scale(1.1);box-shadow:0 8px 28px rgba(168,85,247,.6)}
+@keyframes floatPulse{0%,100%{box-shadow:0 4px 20px rgba(168,85,247,.4)}50%{box-shadow:0 4px 28px rgba(236,72,153,.55)}}
+.float-popup{
+  position:fixed;bottom:5.5rem;left:2rem;z-index:800;
+  width:290px;background:rgba(20,16,32,.92);border:1px solid var(--border);
+  border-radius:18px;padding:1.3rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);backdrop-filter:blur(20px);
+  transform:translateY(10px) scale(.96);opacity:0;pointer-events:none;
+  transition:transform .25s,opacity .25s;
+}
+.float-popup.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all}
+.float-popup h4{font-size:.95rem;font-weight:700;margin-bottom:1rem}
+.float-popup input,.float-popup textarea{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:9px;padding:.58rem .9rem;color:var(--text);font-family:'Heebo',sans-serif;font-size:.86rem;direction:rtl;outline:none;width:100%;margin-bottom:.6rem}
+.float-popup input:focus,.float-popup textarea:focus{border-color:rgba(168,85,247,.45)}
+.float-popup textarea{min-height:65px;resize:none}
+.fp-close{position:absolute;top:.75rem;left:.9rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.95rem}
+.float-sent{text-align:center;padding:.5rem 0;color:var(--gr);font-weight:700;font-size:.92rem;display:none}
 
 /* ── ADMIN ── */
-.admin-panel { position: fixed; inset: 0; z-index: 9500; display: none; background: var(--bg); overflow-y: auto }
-.admin-panel.open { display: block }
-.admin-topbar { position: sticky; top: 0; z-index: 10; background: rgba(11,11,16,.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 58px; display: flex; align-items: center; justify-content: space-between }
-.admin-topbar h2 { font-size: 1rem; font-weight: 700; background: linear-gradient(90deg,var(--purple),var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text }
-.admin-content { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem }
-.admin-tabs { display: flex; gap: .4rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: .4rem; flex-wrap: wrap }
-.admin-tab { padding: .48rem 1.1rem; border-radius: 8px 8px 0 0; background: none; border: none; color: var(--muted); font-family: 'Heebo',sans-serif; font-size: .88rem; font-weight: 600; cursor: pointer; transition: background .2s,color .2s }
-.admin-tab.active { background: rgba(139,92,246,.1); color: var(--purple); border-bottom: 2px solid var(--purple) }
-.admin-tab-content { display: none } .admin-tab-content.active { display: block }
-.admin-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 1.6rem; margin-bottom: 1.3rem }
-.admin-card h3 { font-size: .98rem; font-weight: 700; margin-bottom: 1.3rem; color: var(--purple) }
-.admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem }
-.admin-group { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .85rem }
-.admin-group label { font-size: .8rem; font-weight: 600; color: var(--muted) }
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 1rem; margin-bottom: 1.3rem }
-.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 13px; padding: 1.1rem; text-align: center }
-.stat-card-num { font-size: 1.9rem; font-weight: 900; background: linear-gradient(135deg,var(--purple),var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text }
-.stat-card-label { font-size: .76rem; color: var(--muted); margin-top: .2rem }
-.app-list-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 1.05rem; display: flex; align-items: center; gap: .85rem; margin-bottom: .7rem }
-.app-list-emoji { font-size: 1.6rem; flex-shrink: 0 }
-.app-list-info { flex: 1; min-width: 0 }
-.app-list-name { font-weight: 700; font-size: .92rem }
-.app-list-cat { font-size: .7rem; color: var(--purple); text-transform: uppercase; letter-spacing: 1px }
-.app-list-desc { font-size: .8rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
-.app-list-price { font-size: .8rem; font-weight: 700; color: var(--cyan); white-space: nowrap }
-.app-list-actions { display: flex; gap: .4rem; flex-shrink: 0 }
+.admin-panel{position:fixed;inset:0;z-index:9500;display:none;background:var(--bg);overflow-y:auto}
+.admin-panel.open{display:block}
+.admin-topbar{position:sticky;top:0;z-index:10;background:rgba(8,8,16,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between}
+.admin-topbar h2{font-size:1rem;font-weight:700;background:linear-gradient(90deg,var(--p),var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.admin-content{max-width:880px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.admin-tabs{display:flex;gap:.4rem;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:.4rem;flex-wrap:wrap}
+.admin-tab{padding:.48rem 1.1rem;border-radius:8px 8px 0 0;background:none;border:none;color:var(--muted);font-family:'Heebo',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.admin-tab.active{background:rgba(168,85,247,.1);color:var(--p);border-bottom:2px solid var(--p)}
+.admin-tab-content{display:none}.admin-tab-content.active{display:block}
+.admin-card{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:1.6rem;margin-bottom:1.3rem}
+.admin-card h3{font-size:.98rem;font-weight:700;margin-bottom:1.3rem;color:var(--p)}
+.admin-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.admin-group{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.85rem}
+.admin-group label{font-size:.8rem;font-weight:600;color:var(--muted)}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.3rem}
+.stat-card{background:var(--glass);border:1px solid var(--border);border-radius:13px;padding:1.1rem;text-align:center}
+.stat-card-num{font-size:1.9rem;font-weight:900;background:linear-gradient(135deg,var(--p),var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-card-label{font-size:.76rem;color:var(--muted);margin-top:.2rem}
+.app-list-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:1.05rem;display:flex;align-items:center;gap:.85rem;margin-bottom:.7rem}
+.app-list-emoji{font-size:1.6rem;flex-shrink:0}
+.app-list-info{flex:1;min-width:0}
+.app-list-name{font-weight:700;font-size:.92rem}
+.app-list-cat{font-size:.7rem;color:var(--p);text-transform:uppercase;letter-spacing:1px}
+.app-list-desc{font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-list-price{font-size:.8rem;font-weight:700;color:var(--cy);white-space:nowrap}
+.app-list-actions{display:flex;gap:.4rem;flex-shrink:0}
 
 /* ── OVERLAY / LOGIN ── */
-.overlay { position: fixed; inset: 0; z-index: 9000; display: none; background: rgba(5,5,10,.96); backdrop-filter: blur(20px); align-items: center; justify-content: center }
-.overlay.open { display: flex }
-.login-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem 3rem; width: min(400px,90vw); text-align: center; box-shadow: 0 40px 80px rgba(0,0,0,.6); animation: fadeUp .4s ease; position: relative }
-.login-box h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: .4rem }
-.login-box p { color: var(--muted); font-size: .88rem; margin-bottom: 1.7rem }
-.login-icon { font-size: 2.2rem; margin-bottom: .8rem; color: var(--purple) }
-.login-box input { text-align: center; letter-spacing: .25rem; font-size: 1.05rem; margin-bottom: .75rem; direction: ltr }
-.login-err { color: #f87171; font-size: .82rem; margin-bottom: .7rem; min-height: 1.2em }
-.login-close { position: absolute; top: 1rem; left: 1rem; background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; transition: color .2s }
-.login-close:hover { color: var(--text) }
+.overlay{position:fixed;inset:0;z-index:9000;display:none;background:rgba(4,4,10,.96);backdrop-filter:blur(20px);align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.login-box{background:rgba(20,16,32,.92);border:1px solid var(--border);border-radius:22px;padding:2.5rem 3rem;width:min(400px,90vw);text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.7);animation:fadeUp .4s ease;position:relative;backdrop-filter:blur(20px)}
+.login-box h2{font-size:1.4rem;font-weight:800;margin-bottom:.4rem}
+.login-box p{color:var(--muted);font-size:.88rem;margin-bottom:1.7rem}
+.login-icon{font-size:2.2rem;margin-bottom:.8rem;color:var(--p)}
+.login-box input{text-align:center;letter-spacing:.25rem;font-size:1.05rem;margin-bottom:.75rem;direction:ltr}
+.login-err{color:#f87171;font-size:.82rem;margin-bottom:.7rem;min-height:1.2em}
+.login-close{position:absolute;top:1rem;left:1rem;background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;transition:color .2s}
+.login-close:hover{color:var(--text)}
 
 /* ── DIVIDER ── */
-.divider { height: 1px; background: var(--border); max-width: 1040px; margin: 0 auto; position: relative; z-index: 1 }
+.divider{height:1px;background:var(--border);max-width:1100px;margin:0 auto;position:relative;z-index:1}
 
 /* ── FOOTER ── */
-footer { text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .84rem; position: relative; z-index: 1 }
-footer a { color: var(--purple); text-decoration: none }
+footer{text-align:center;padding:2.5rem 2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.84rem;position:relative;z-index:1}
+footer a{color:var(--p);text-decoration:none}
 
 /* ── LIGHT MODE ── */
-body.light {
-  --bg: #f8f7ff; --bg2: #ffffff; --bg3: #f0eeff;
-  --text: #0d0b18; --muted: #5a5578; --border: rgba(0,0,0,.07);
-}
-body.light::before {
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 10%, rgba(139,92,246,.1) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(236,72,153,.07) 0%, transparent 50%),
-    radial-gradient(ellipse 45% 40% at 60% 80%, rgba(249,115,22,.06) 0%, transparent 50%);
-}
-body.light nav { background: rgba(248,247,255,.8) }
-body.light input, body.light select, body.light textarea { background: #f0eeff; color: #0d0b18; border-color: rgba(0,0,0,.1) }
-body.light select option { background: #fff; color: #0d0b18 }
-body.light .svc { background: #fff }
-body.light .form-box, body.light .contact-box, body.light .admin-card, body.light .stat-card { background: #fff }
-body.light .app-list-item { background: var(--bg3) }
-body.light .admin-panel { background: var(--bg) }
-body.light .admin-topbar { background: rgba(248,247,255,.95) }
-body.light .slide { background: #fff }
-body.light .slider-btn { background: #fff }
-body.light .login-box { background: #fff }
-body.light .overlay { background: rgba(230,225,255,.92) }
+body.light{--bg:#f5f3ff;--glass:rgba(255,255,255,.7);--glass2:rgba(255,255,255,.8);--border:rgba(0,0,0,.08);--text:#0d0a1a;--muted:#6b5f8a}
+body.light nav{background:rgba(245,243,255,.82)}
+body.light #bg-grad{opacity:.6}
+body.light #bg::after{background:rgba(245,243,255,.55)}
+body.light input,body.light select,body.light textarea{background:rgba(0,0,0,.04);color:#0d0a1a;border-color:rgba(0,0,0,.1)}
+body.light select option{background:#fff;color:#0d0a1a}
+body.light .login-box,.body.light .float-popup{background:rgba(255,255,255,.95)}
+body.light .admin-panel{background:var(--bg)}
+body.light .admin-topbar{background:rgba(245,243,255,.9)}
+body.light .overlay{background:rgba(220,215,240,.92)}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px) } to { opacity:1; transform:translateY(0) } }
-.reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease }
-.reveal.visible { opacity:1; transform:translateY(0) }
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
 
 /* ── RESPONSIVE ── */
-@media(max-width: 768px) {
-  .nav-links { display: none }
-  .hamburger { display: flex }
-  .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 60px; right: 0; left: 0; background: rgba(11,11,16,.97); backdrop-filter: blur(16px); padding: 2rem; gap: 1.5rem; border-bottom: 1px solid var(--border) }
-  .f-row, .admin-form-row, .contact-box { grid-template-columns: 1fr }
-  section { padding: 90px 1.4rem 50px }
-  .hero-h1 { letter-spacing: -1px }
+@media(max-width:900px){
+  nav{top:.8rem;right:1rem;left:1rem;transform:none;border-radius:16px}
+  .bento{grid-template-columns:1fr 1fr}
+  .bcard.span2{grid-column:span 1}
+  .bcard.tall{grid-row:span 1}
+}
+@media(max-width:640px){
+  nav{padding:.5rem .5rem .5rem 1rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:4rem;right:1rem;left:1rem;background:rgba(20,16,32,.97);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:16px;padding:1.5rem;gap:1.2rem}
+  .bento{grid-template-columns:1fr}
+  .fg-row,.admin-form-row,.contact-glass,.proc-grid{grid-template-columns:1fr}
+  .proc-grid::before{display:none}
+  section{padding:90px 1.2rem 50px}
 }
 </style>
 </head>
 <body>
 
+<!-- BG -->
+<div id="bg"><div id="bg-grad"></div><div id="bg-grain"></div></div>
+
 <!-- NAV -->
 <nav>
-  <div class="logo">YTech</div>
+  <div class="nav-logo">YTech</div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">ראשי</a></li>
     <li><a href="#services">מחירים</a></li>
@@ -367,75 +457,124 @@ body.light .overlay { background: rgba(230,225,255,.92) }
     <li><a href="#contact">צור קשר</a></li>
   </ul>
   <div class="nav-right">
-    <button class="theme-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+    <button class="nav-icon-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<div id="aurora"><div class="aurora-blob ab1"></div><div class="aurora-blob ab2"></div><div class="aurora-blob ab3"></div><div class="aurora-blob ab4"></div></div>
 <div class="page">
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pill"><i class="fa-solid fa-mobile-screen-button"></i> מפתח אנדרואיד מקצועי</div>
-  <h1 class="hero-h1">
-    <span class="c1">תיקון</span> <span class="c2">ופיתוח</span><br/>
-    <span class="c3">מכשירי</span> <span class="c4">אנדרואיד</span>
+  <div class="hero-label"><i class="fa-solid fa-mobile-screen-button"></i> מפתח אנדרואיד מקצועי</div>
+  <h1 class="hero-title">
+    <span class="line1">מכשיר שלך,</span>
+    <span class="line2">בידיים טובות</span>
   </h1>
-  <p class="hero-sub">שירות מהיר ואמין – רוט, צריבת גרסה, חסימות מתקדמות ועוד. תוצאות מקצועיות, מחירים הוגנים.</p>
-  <div class="hero-btns">
-    <a href="#services" class="btn btn-purple"><i class="fa-solid fa-list"></i> ראה מחירים</a>
-    <a href="#order"    class="btn btn-ghost"><i class="fa-solid fa-phone"></i> הזמן שירות</a>
+  <p class="hero-desc">רוט, צריבת גרסה, חסימות מתקדמות ועוד – שירות מהיר, מקצועי ובמחיר הוגן.</p>
+  <div class="hero-cta">
+    <a href="#services" class="btn btn-glow"><i class="fa-solid fa-list"></i> ראה מחירים</a>
+    <a href="#order"    class="btn btn-glass"><i class="fa-solid fa-phone"></i> הזמן שירות</a>
   </div>
-  <div class="hero-stats">
-    <div class="hs"><div class="hs-n" style="color:var(--purple)">500+</div><div class="hs-l">מכשירים טופלו</div></div>
-    <div class="hs"><div class="hs-n" style="color:var(--pink)">4</div><div class="hs-l">שירותים מרכזיים</div></div>
-    <div class="hs"><div class="hs-n" style="color:var(--orange)">24h</div><div class="hs-l">זמן תגובה</div></div>
-    <div class="hs"><div class="hs-n" style="color:var(--cyan)">100%</div><div class="hs-l">שביעות רצון</div></div>
+  <div class="hero-bar">
+    <div class="hb"><div class="hb-n" style="color:var(--p)">500+</div><div class="hb-l">מכשירים טופלו</div></div>
+    <div class="hb"><div class="hb-n" style="color:var(--pk)">4</div><div class="hb-l">שירותים מרכזיים</div></div>
+    <div class="hb"><div class="hb-n" style="color:var(--or)">24h</div><div class="hb-l">זמן תגובה</div></div>
+    <div class="hb"><div class="hb-n" style="color:var(--cy)">100%</div><div class="hb-l">שביעות רצון</div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq-wrap">
+  <div class="mq-track" id="mqTrack">
+    <span class="mq-item"><i class="fa-solid fa-bolt"></i> שירות מהיר</span>
+    <span class="mq-item"><i class="fa-solid fa-star"></i> 100% שביעות רצון</span>
+    <span class="mq-item"><i class="fa-solid fa-shield-halved"></i> אחריות מלאה</span>
+    <span class="mq-item"><i class="fa-solid fa-mobile-screen-button"></i> 500+ מכשירים</span>
+    <span class="mq-item"><i class="fa-solid fa-clock"></i> מענה 24 שעות</span>
+    <span class="mq-item"><i class="fa-solid fa-wrench"></i> מקצועי ומדויק</span>
+    <span class="mq-item"><i class="fa-solid fa-bolt"></i> שירות מהיר</span>
+    <span class="mq-item"><i class="fa-solid fa-star"></i> 100% שביעות רצון</span>
+    <span class="mq-item"><i class="fa-solid fa-shield-halved"></i> אחריות מלאה</span>
+    <span class="mq-item"><i class="fa-solid fa-mobile-screen-button"></i> 500+ מכשירים</span>
+    <span class="mq-item"><i class="fa-solid fa-clock"></i> מענה 24 שעות</span>
+    <span class="mq-item"><i class="fa-solid fa-wrench"></i> מקצועי ומדויק</span>
+  </div>
+</div>
+
+<div class="divider" style="margin-top:0"></div>
+
+<!-- SERVICES BENTO -->
+<section id="services" style="text-align:center">
+  <div class="reveal">
+    <div class="sec-eyebrow ey-p"><i class="fa-solid fa-shekel-sign"></i> תעריפים</div>
+    <h2 class="sec-h">השירותים שלי</h2>
+    <p class="sec-sub">כל שירות כולל ייעוץ מקצועי ואחריות מלאה.</p>
+  </div>
+  <div class="bento reveal">
+    <div class="bcard bc-p span2">
+      <div class="bcard-accent"></div>
+      <div class="bcard-ico"><i class="fa-solid fa-lock-open"></i></div>
+      <div class="bcard-price">60<sub>₪</sub></div>
+      <div class="bcard-name">רוט</div>
+      <div class="bcard-tag">הרשאות מלאות למכשיר</div>
+      <div class="bcard-desc">פתיחת הרשאות Root – גישה מלאה למערכת, מחיקת אפליקציות מובנות, והתאמות מתקדמות.</div>
+      <a href="#order" class="btn btn-glow btn-sm" data-svc="1" style="align-self:flex-start">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+    <div class="bcard bc-or">
+      <div class="bcard-accent"></div>
+      <div class="bcard-ico"><i class="fa-solid fa-fire"></i></div>
+      <div class="bcard-price">50<sub>₪</sub></div>
+      <div class="bcard-name">צריבת גרסה</div>
+      <div class="bcard-tag">תיקון תוכנה מלא</div>
+      <div class="bcard-desc">צריבת ROM – אידיאלי כשהמכשיר תקוע בלופ אתחול.</div>
+      <a href="#order" class="btn btn-or btn-sm" data-svc="2" style="align-self:flex-start">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+    <div class="bcard bc-cy">
+      <div class="bcard-accent"></div>
+      <div class="bcard-ico"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="bcard-price">50<sub>₪</sub></div>
+      <div class="bcard-name">הכשרת נגנים</div>
+      <div class="bcard-tag">חסימה הרמטית</div>
+      <div class="bcard-desc">חסימות מתקדמות – למניעת גישה לאפליקציות ואתרים.</div>
+      <a href="#order" class="btn btn-cy btn-sm" data-svc="3" style="align-self:flex-start">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+    <div class="bcard bc-pk">
+      <div class="bcard-accent"></div>
+      <div class="bcard-ico"><i class="fa-solid fa-globe"></i></div>
+      <div class="bcard-price">10<sub>₪</sub></div>
+      <div class="bcard-name">תרגום אפליקציה</div>
+      <div class="bcard-tag">התאמה לעברית RTL</div>
+      <div class="bcard-desc">תרגום ממשק אפליקציה לעברית עם RTL מלא.</div>
+      <a href="#order" class="btn btn-pk btn-sm" data-svc="4" style="align-self:flex-start">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- SERVICES -->
-<section id="services">
+<!-- PROCESS -->
+<section id="process" style="text-align:center">
   <div class="reveal">
-    <div class="sec-chip chip-purple"><i class="fa-solid fa-shekel-sign"></i> תעריפים</div>
-    <h2 class="sec-h2">השירותים שלי</h2>
-    <p class="sec-desc">כל שירות כולל ייעוץ מקצועי, עבודה מוקפדת ואחריות מלאה.</p>
+    <div class="sec-eyebrow ey-cy"><i class="fa-solid fa-arrow-trend-up"></i> איך זה עובד</div>
+    <h2 class="sec-h">פשוט ומהיר</h2>
+    <p class="sec-sub">3 שלבים מהפנייה ועד לתוצאה.</p>
   </div>
-  <div class="svcs reveal">
-    <div class="svc">
-      <div class="svc-ico"><i class="fa-solid fa-lock-open"></i></div>
-      <div class="svc-price">60<sub>₪</sub></div>
-      <div class="svc-name">רוט</div>
-      <div class="svc-tag">הרשאות מלאות</div>
-      <div class="svc-desc">פתיחת הרשאות Root – גישה מלאה למערכת, מחיקת אפליקציות מובנות, והתאמות מתקדמות.</div>
-      <a href="#order" class="btn btn-purple btn-sm" data-svc="1">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+  <div class="proc-grid reveal">
+    <div class="proc-card">
+      <div class="proc-num pn1">1</div>
+      <div class="proc-title">פנה אלינו</div>
+      <div class="proc-desc">מלא את הטופס או לחץ על כפתור יצירת הקשר – נחזור תוך 24 שעות.</div>
     </div>
-    <div class="svc">
-      <div class="svc-ico"><i class="fa-solid fa-fire"></i></div>
-      <div class="svc-price">50<sub>₪</sub></div>
-      <div class="svc-name">צריבת גרסה</div>
-      <div class="svc-tag">תיקון תוכנה מלא</div>
-      <div class="svc-desc">צריבת ROM / Firmware – אידיאלי כאשר המכשיר תקוע, בלופ אתחול, או לאחר עדכון כושל.</div>
-      <a href="#order" class="btn btn-sm" style="background:var(--orange);color:#fff" data-svc="2">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+    <div class="proc-card">
+      <div class="proc-num pn2">2</div>
+      <div class="proc-title">תאם שירות</div>
+      <div class="proc-desc">נאבחן את הצורך ונסביר מה צריך לעשות ואיך מעבירים את המכשיר.</div>
     </div>
-    <div class="svc">
-      <div class="svc-ico"><i class="fa-solid fa-shield-halved"></i></div>
-      <div class="svc-price">50<sub>₪</sub></div>
-      <div class="svc-name">הכשרת נגנים</div>
-      <div class="svc-tag">חסימה הרמטית</div>
-      <div class="svc-desc">הגדרת חסימות מתקדמות – למניעת גישה לאפליקציות, אתרים ושירותים לא רצויים.</div>
-      <a href="#order" class="btn btn-sm" style="background:var(--cyan);color:#0b0b10" data-svc="3">הזמן <i class="fa-solid fa-arrow-left"></i></a>
-    </div>
-    <div class="svc">
-      <div class="svc-ico"><i class="fa-solid fa-globe"></i></div>
-      <div class="svc-price">10<sub>₪</sub></div>
-      <div class="svc-name">תרגום אפליקציה</div>
-      <div class="svc-tag">התאמה לעברית</div>
-      <div class="svc-desc">תרגום ממשק אפליקציה לעברית עם תמיכה ב-RTL מלא. שירות מהיר ומדויק.</div>
-      <a href="#order" class="btn btn-pink btn-sm" data-svc="4">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+    <div class="proc-card">
+      <div class="proc-num pn3">3</div>
+      <div class="proc-title">קבל תוצאה</div>
+      <div class="proc-desc">השירות מבוצע במהירות – תקבל את המכשיר בחזרה מוכן לשימוש.</div>
     </div>
   </div>
 </section>
@@ -443,23 +582,23 @@ body.light .overlay { background: rgba(230,225,255,.92) }
 <div class="divider"></div>
 
 <!-- ORDER -->
-<section id="order" style="max-width:680px">
+<section id="order" style="max-width:680px;text-align:center">
   <div class="reveal">
-    <div class="sec-chip chip-orange"><i class="fa-solid fa-clipboard-list"></i> הזמנה</div>
-    <h2 class="sec-h2">השאר פרטים</h2>
-    <p class="sec-desc">מלא את הטופס ואחזור אליך בהקדם.</p>
+    <div class="sec-eyebrow ey-or"><i class="fa-solid fa-clipboard-list"></i> הזמנה</div>
+    <h2 class="sec-h">השאר פרטים</h2>
+    <p class="sec-sub">מלא את הטופס ואחזור אליך בהקדם.</p>
   </div>
-  <div class="form-box reveal">
+  <div class="form-glass reveal">
     <form id="orderForm">
-      <div class="f-row">
-        <div class="f-group"><label>שם פרטי</label><input type="text" name="שם_פרטי" placeholder="ישראל" required/></div>
-        <div class="f-group"><label>שם משפחה</label><input type="text" name="שם_משפחה" placeholder="ישראלי" required/></div>
+      <div class="fg-row">
+        <div class="fg-group"><label>שם פרטי</label><input type="text" name="שם_פרטי" placeholder="ישראל" required/></div>
+        <div class="fg-group"><label>שם משפחה</label><input type="text" name="שם_משפחה" placeholder="ישראלי" required/></div>
       </div>
-      <div class="f-row">
-        <div class="f-group"><label>טלפון</label><input type="tel" name="טלפון" placeholder="050-0000000" required/></div>
-        <div class="f-group"><label>אימייל</label><input type="email" name="אימייל" placeholder="you@example.com" required/></div>
+      <div class="fg-row">
+        <div class="fg-group"><label>טלפון</label><input type="tel" name="טלפון" placeholder="050-0000000" required/></div>
+        <div class="fg-group"><label>אימייל</label><input type="email" name="אימייל" placeholder="you@example.com" required/></div>
       </div>
-      <div class="f-group">
+      <div class="fg-group">
         <label>בחר שירות</label>
         <select id="serviceSelect" name="שירות" required>
           <option value="" disabled selected>-- בחר שירות --</option>
@@ -470,12 +609,12 @@ body.light .overlay { background: rgba(230,225,255,.92) }
           <option value="אחר">אחר</option>
         </select>
       </div>
-      <div class="f-group"><label>דגם המכשיר</label><input type="text" name="דגם_מכשיר" placeholder="Samsung Galaxy S25"/></div>
-      <div class="f-group"><label>פרטים נוספים</label><textarea name="פרטים_נוספים" placeholder="תאר את הבעיה..."></textarea></div>
-      <button type="button" class="btn btn-purple" id="submitBtn" style="width:100%;justify-content:center" onclick="submitForm()">
+      <div class="fg-group"><label>דגם המכשיר</label><input type="text" name="דגם_מכשיר" placeholder="Samsung Galaxy S25"/></div>
+      <div class="fg-group"><label>פרטים נוספים</label><textarea name="פרטים_נוספים" placeholder="תאר את הבעיה..."></textarea></div>
+      <button type="button" class="btn btn-glow" id="submitBtn" style="width:100%;justify-content:center" onclick="submitForm()">
         <i class="fa-solid fa-paper-plane"></i> שלח הזמנה
       </button>
-      <p class="f-note">✓ הטופס ישלח ישירות למייל. נחזור אליך תוך 24 שעות.</p>
+      <p class="fg-note">✓ נחזור אליך תוך 24 שעות.</p>
       <div id="formMsg" style="display:none"></div>
     </form>
   </div>
@@ -484,81 +623,63 @@ body.light .overlay { background: rgba(230,225,255,.92) }
 <div class="divider"></div>
 
 <!-- TESTIMONIALS -->
-<section id="testimonials" style="max-width:760px">
+<section id="testimonials" style="max-width:740px;text-align:center">
   <div class="reveal">
-    <div class="sec-chip chip-cyan"><i class="fa-solid fa-star"></i> המלצות</div>
-    <h2 class="sec-h2">מה אומרים הלקוחות</h2>
-    <p class="sec-desc">לקוחות מרוצים שקיבלו שירות מקצועי ומהיר.</p>
+    <div class="sec-eyebrow ey-p"><i class="fa-solid fa-star"></i> המלצות</div>
+    <h2 class="sec-h">מה אומרים הלקוחות</h2>
   </div>
   <div class="slider-wrapper reveal">
     <div class="slider-track" id="sliderTrack">
-      <div class="slide">
-        <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">עשה לי רוט לגלקסי S23 בלי שום בעיה. המכשיר עובד מעולה, שירות מהיר ומקצועי לגמרי. ממליץ בחום!</div>
-        <div class="slide-author">
-          <div class="slide-av"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">יוסי כהן</div><div class="slide-role">לקוח מרוצה</div></div>
-        </div>
-      </div>
-      <div class="slide">
-        <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">המכשיר שלי היה תקוע בלופ אתחול שבועיים, YTech תיקן אותו תוך שעה בצריבה. מדהים!</div>
-        <div class="slide-author">
-          <div class="slide-av"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">שירה לוי</div><div class="slide-role">לקוחה מרוצה</div></div>
-        </div>
-      </div>
-      <div class="slide">
-        <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">ביקשתי הכשרת נגנים לטאבלט של הילדים. עבודה מדויקת, חסם בדיוק מה שביקשתי. שווה כל שקל!</div>
-        <div class="slide-author">
-          <div class="slide-av"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">דוד אברהם</div><div class="slide-role">לקוח מרוצה</div></div>
-        </div>
-      </div>
-      <div class="slide">
-        <div class="slide-stars">★★★★★</div>
-        <div class="slide-text">תרגם לי אפליקציה שלמה לעברית עם RTL מלא. התוצאה מקצועית לחלוטין, מחיר מצחיק של 10 שקל!</div>
-        <div class="slide-author">
-          <div class="slide-av"><i class="fa-solid fa-user"></i></div>
-          <div><div class="slide-name">מיכל ברק</div><div class="slide-role">לקוחה מרוצה</div></div>
-        </div>
-      </div>
+      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">עשה לי רוט לגלקסי S23 בלי שום בעיה. המכשיר עובד מעולה, שירות מהיר ומקצועי לגמרי!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">יוסי כהן</div><div class="slide-role">לקוח מרוצה</div></div></div></div>
+      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">המכשיר שלי היה תקוע בלופ אתחול שבועיים, YTech תיקן אותו תוך שעה בצריבה. מדהים!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">שירה לוי</div><div class="slide-role">לקוחה מרוצה</div></div></div></div>
+      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">ביקשתי הכשרת נגנים לטאבלט של הילדים. עבודה מדויקת, חסם בדיוק מה שביקשתי. שווה כל שקל!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">דוד אברהם</div><div class="slide-role">לקוח מרוצה</div></div></div></div>
+      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">תרגם לי אפליקציה שלמה לעברית עם RTL מלא. התוצאה מקצועית לחלוטין, מחיר מצחיק של 10 שקל!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">מיכל ברק</div><div class="slide-role">לקוחה מרוצה</div></div></div></div>
     </div>
   </div>
-  <div class="slider-controls">
-    <button class="slider-btn" id="sliderPrev">&#8592;</button>
-    <div class="slider-dots" id="sliderDots"></div>
-    <button class="slider-btn" id="sliderNext">&#8594;</button>
+  <div class="slider-controls"><button class="slider-btn" id="sliderPrev">&#8592;</button><div class="slider-dots" id="sliderDots"></div><button class="slider-btn" id="sliderNext">&#8594;</button></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq" style="max-width:700px;text-align:center">
+  <div class="reveal">
+    <div class="sec-eyebrow ey-cy"><i class="fa-solid fa-circle-question"></i> שאלות נפוצות</div>
+    <h2 class="sec-h">יש לך שאלות?</h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">האם רוט מבטל את אחריות היצרן? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">ברוב המקרים כן – ניתן לבצע unroot ולהחזיר למצב מקורי לפני שליחה לשירות.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">כמה זמן לוקח כל שירות? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">רוט וצריבה בדרך כלל 30 דקות עד שעה. הכשרת נגנים ותרגום תלויים במורכבות.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">האם יש אחריות על השירות? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">כן! כל שירות מגיע עם אחריות מלאה – אם משהו לא עובד נתקן ללא עלות.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">איך מעבירים את המכשיר? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">שליחת דואר, שירות מרחוק (במקרים מסוימים), או מסירה ידנית – נחליט ביחד.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">איזה מכשירים תומכים ברוט? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Samsung, Xiaomi, OnePlus, Google Pixel ועוד. מומלץ לבדוק תאימות לפני ההזמנה.</div></div>
   </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- CONTACT -->
-<section id="contact" style="max-width:680px">
+<section id="contact" style="max-width:680px;text-align:center">
   <div class="reveal">
-    <div class="sec-chip chip-pink"><i class="fa-solid fa-envelope"></i> צור קשר</div>
-    <h2 class="sec-h2">נדבר ישירות</h2>
+    <div class="sec-eyebrow ey-pk"><i class="fa-solid fa-envelope"></i> צור קשר</div>
+    <h2 class="sec-h">נדבר ישירות</h2>
   </div>
-  <div class="contact-box reveal">
+  <div class="contact-glass reveal">
     <div>
-      <div class="contact-name">YTech</div>
-      <div class="contact-desc">מפתח אנדרואיד מקצועי – זמין לכל שאלה ושירות.</div>
-      <a href="mailto:130105630610a@gmail.com" class="contact-mail"><i class="fa-solid fa-envelope"></i> 130105630610a@gmail.com</a>
+      <div class="cn-name">YTech</div>
+      <div class="cn-desc">מפתח אנדרואיד מקצועי – זמין לכל שאלה ושירות.</div>
+      <a href="mailto:130105630610a@gmail.com" class="cn-mail"><i class="fa-solid fa-envelope"></i> 130105630610a@gmail.com</a>
     </div>
-    <div class="contact-btns">
-      <a href="https://mitmachim.top/user/%D7%9E%D7%92%D7%A0%D7%95%D7%A1-%D7%A7%D7%A8%D7%9C%D7%A1%D7%9F" target="_blank" class="btn btn-purple"><i class="fa-solid fa-comments"></i> מתמחים טופ</a>
-      <a href="tel:0556720379" class="btn btn-ghost"><i class="fa-solid fa-phone"></i> 055-6720379</a>
+    <div class="cn-btns">
+      <a href="https://mitmachim.top/user/%D7%9E%D7%92%D7%A0%D7%95%D7%A1-%D7%A7%D7%A8%D7%9C%D7%A1%D7%9F" target="_blank" class="btn btn-glow"><i class="fa-solid fa-comments"></i> מתמחים טופ</a>
+      <a href="tel:0556720379" class="btn btn-glass"><i class="fa-solid fa-phone"></i> 055-6720379</a>
     </div>
   </div>
 </section>
 
 </div>
 
-<footer>
-  <p>© 2026 YTech · עוצב ופותח בישראל · <a href="#hero">חזרה למעלה ↑</a></p>
-</footer>
+<footer><p>© 2026 YTech · עוצב ופותח בישראל · <a href="#hero">חזרה למעלה ↑</a></p></footer>
 
 <!-- LOGIN -->
 <div class="overlay" id="loginOverlay">
@@ -566,10 +687,10 @@ body.light .overlay { background: rgba(230,225,255,.92) }
     <button class="login-close" onclick="closeLogin()"><i class="fa-solid fa-xmark"></i></button>
     <div class="login-icon"><i class="fa-solid fa-lock"></i></div>
     <h2>כניסת מנהל</h2>
-    <p>הכנס את הסיסמה כדי לגשת לפאנל הניהול</p>
+    <p>הכנס את הסיסמה לגישה לפאנל</p>
     <input type="password" id="pwInput" placeholder="••••••••" dir="ltr" autocomplete="off"/>
     <div class="login-err" id="loginErr"></div>
-    <button class="btn btn-purple" style="width:100%;justify-content:center" onclick="checkPass()"><i class="fa-solid fa-right-to-bracket"></i> כניסה</button>
+    <button class="btn btn-glow" style="width:100%;justify-content:center" onclick="checkPass()"><i class="fa-solid fa-right-to-bracket"></i> כניסה</button>
   </div>
 </div>
 
@@ -577,7 +698,7 @@ body.light .overlay { background: rgba(230,225,255,.92) }
 <div class="admin-panel" id="adminPanel">
   <div class="admin-topbar">
     <h2><i class="fa-solid fa-screwdriver-wrench"></i> פאנל ניהול – YTech</h2>
-    <button class="btn btn-ghost btn-sm" onclick="closeAdmin()"><i class="fa-solid fa-xmark"></i> יציאה</button>
+    <button class="btn btn-glass btn-sm" onclick="closeAdmin()"><i class="fa-solid fa-xmark"></i> יציאה</button>
   </div>
   <div class="admin-content">
     <div class="admin-tabs">
@@ -587,40 +708,51 @@ body.light .overlay { background: rgba(230,225,255,.92) }
     </div>
     <div class="admin-tab-content active" id="tab-dashboard">
       <div class="stats-row" id="adminStats"></div>
-      <div class="admin-card"><h3>ברוך הבא!</h3><p style="color:var(--muted);font-size:.9rem;line-height:1.7">מכאן תוכל לנהל את כל האפליקציות והתוכנות שמוצגות באתר.</p></div>
+      <div class="admin-card"><h3>ברוך הבא!</h3><p style="color:var(--muted);font-size:.9rem;line-height:1.7">מכאן תוכל לנהל את כל האפליקציות שמוצגות באתר.</p></div>
     </div>
     <div class="admin-tab-content" id="tab-addApp">
       <div class="admin-card">
         <h3>הוסף פרויקט חדש</h3>
         <div class="admin-form-row">
-          <div class="admin-group"><label>שם הפרויקט *</label><input type="text" id="a_name" placeholder="RootMaster Pro"/></div>
+          <div class="admin-group"><label>שם *</label><input type="text" id="a_name" placeholder="RootMaster Pro"/></div>
           <div class="admin-group"><label>קטגוריה *</label><select id="a_cat"><option value="אפליקציה">אפליקציה</option><option value="תוכנה">תוכנה</option><option value="כלי מפתח">כלי מפתח</option><option value="משחק">משחק</option><option value="אחר">אחר</option></select></div>
         </div>
         <div class="admin-form-row">
           <div class="admin-group"><label>אימוג'י</label><input type="text" id="a_emoji" placeholder="📱" maxlength="4"/></div>
-          <div class="admin-group"><label>מחיר (ריק = חינמי)</label><input type="text" id="a_price" placeholder="15₪"/></div>
+          <div class="admin-group"><label>מחיר (ריק=חינמי)</label><input type="text" id="a_price" placeholder="15₪"/></div>
         </div>
-        <div class="admin-group"><label>תיאור קצר *</label><input type="text" id="a_desc" placeholder="תיאור קצר..."/></div>
-        <div class="admin-group"><label>קישור (אופציונלי)</label><input type="url" id="a_link" placeholder="https://..." dir="ltr"/></div>
-        <div class="admin-group"><label>תגיות</label><input type="text" id="a_tags" placeholder="אנדרואיד, רוט, APK"/></div>
+        <div class="admin-group"><label>תיאור *</label><input type="text" id="a_desc" placeholder="תיאור קצר..."/></div>
+        <div class="admin-group"><label>קישור</label><input type="url" id="a_link" placeholder="https://..." dir="ltr"/></div>
+        <div class="admin-group"><label>תגיות</label><input type="text" id="a_tags" placeholder="אנדרואיד, רוט"/></div>
         <div style="display:flex;gap:.7rem;flex-wrap:wrap">
-          <button class="btn btn-purple" onclick="addApp()"><i class="fa-solid fa-floppy-disk"></i> שמור</button>
-          <button class="btn btn-ghost btn-sm" onclick="clearAppForm()"><i class="fa-solid fa-trash"></i> נקה</button>
+          <button class="btn btn-glow" onclick="addApp()"><i class="fa-solid fa-floppy-disk"></i> שמור</button>
+          <button class="btn btn-glass btn-sm" onclick="clearAppForm()"><i class="fa-solid fa-trash"></i> נקה</button>
         </div>
       </div>
     </div>
     <div class="admin-tab-content" id="tab-manageApps">
-      <div class="admin-card">
-        <h3>כל הפרויקטים (<span id="appsCount">0</span>)</h3>
-        <div id="adminAppList"><p style="color:var(--muted);font-size:.88rem">אין פרויקטים עדיין.</p></div>
-      </div>
+      <div class="admin-card"><h3>כל הפרויקטים (<span id="appsCount">0</span>)</h3><div id="adminAppList"><p style="color:var(--muted);font-size:.88rem">אין פרויקטים עדיין.</p></div></div>
     </div>
   </div>
 </div>
 
+<!-- FLOATING CONTACT -->
+<button class="float-btn" id="floatBtn" onclick="toggleFloat()"><i class="fa-solid fa-message" id="floatIcon"></i></button>
+<div class="float-popup" id="floatPopup">
+  <button class="fp-close" onclick="toggleFloat()"><i class="fa-solid fa-xmark"></i></button>
+  <h4><i class="fa-solid fa-message" style="color:var(--p);margin-left:.4rem"></i> צור קשר מהיר</h4>
+  <input type="text" id="fName" placeholder="השם שלך"/>
+  <input type="tel" id="fPhone" placeholder="טלפון"/>
+  <textarea id="fMsg" placeholder="במה אפשר לעזור?"></textarea>
+  <button class="btn btn-glow" style="width:100%;justify-content:center" onclick="sendFloat()"><i class="fa-solid fa-paper-plane"></i> שלח</button>
+  <div class="float-sent" id="floatSent">✅ נשלח! נחזור אליך בקרוב.</div>
+</div>
+
 <div class="toast" id="toast"></div>
 
+
 <script>
+
 
 
 
@@ -852,68 +984,201 @@ async function submitForm(){
 
 
 
-/* ── SCROLL AURORA COLORS ── */
+
+
+
+
+/* ── FAQ ── */
+function toggleFaq(btn){
+  var item=btn.closest('.faq-item');
+  var isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open')});
+  if(!isOpen) item.classList.add('open');
+}
+
+/* ── FLOAT CONTACT ── */
+function toggleFloat(){
+  var popup=document.getElementById('floatPopup');
+  var icon=document.getElementById('floatIcon');
+  popup.classList.toggle('open');
+  icon.className=popup.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-message';
+}
+async function sendFloat(){
+  var name=document.getElementById('fName').value.trim();
+  var phone=document.getElementById('fPhone').value.trim();
+  var msg=document.getElementById('fMsg').value.trim();
+  if(!name||!phone){alert('אנא מלא שם וטלפון');return;}
+  var btn=document.querySelector('.float-popup .btn-purple');
+  btn.textContent='שולח...';btn.disabled=true;
+  try{
+    var fd=new FormData();
+    fd.append('שם',name);fd.append('טלפון',phone);fd.append('הודעה',msg);
+    await fetch('https://formspree.io/f/xnjwkvvq',{method:'POST',body:fd,headers:{Accept:'application/json'}});
+    document.getElementById('floatSent').style.display='block';
+    btn.style.display='none';
+    document.getElementById('fName').value='';
+    document.getElementById('fPhone').value='';
+    document.getElementById('fMsg').value='';
+    setTimeout(function(){
+      document.getElementById('floatSent').style.display='none';
+      btn.style.display='';btn.textContent='שלח';btn.disabled=false;
+      toggleFloat();
+    },3000);
+  }catch(e){btn.textContent='שלח';btn.disabled=false;}
+}
+
+/* ── ANIMATED COUNTERS ── */
 (function(){
-  // 20 color stops – very gradual, no visible jump
-  var stops = [
-    ['#7c3aed','#ec4899','#2563eb','#059669'],
-    ['#8b36e8','#e84aaa','#2060ea','#0fa070'],
-    ['#9932e2','#e440b8','#1a6ee0','#19a878'],
-    ['#a42bdb','#df37c4','#137cd4','#22af7f'],
-    ['#b020d0','#d92ccf','#0d8ac6','#2ab685'],
-    ['#b818c8','#d127d8','#0897b8','#31bc8a'],
-    ['#c010be','#c820e0','#05a4aa','#38c28e'],
-    ['#c815b0','#be1ce6','#04b09c','#3fc892'],
-    ['#d01aa0','#b418e8','#05bc8e','#46cd96'],
-    ['#d82090','#aa14e8','#0ec87e','#52d09a'],
-    ['#df2880','#9e10e4','#1ad46e','#60d49e'],
-    ['#e43468','#9212dc','#2ade5e','#72d8a0'],
-    ['#e84050','#8814d4','#3ce84e','#84dca2'],
-    ['#ec5038','#821ace','#52f040','#96e0a4'],
-    ['#f06020','#7c26c4','#68f432','#a8e4a6'],
-    ['#f27010','#7032b8','#82f424','#b8e8a8'],
-    ['#f48000','#6440aa','#98f018','#c8ecaa'],
-    ['#f38c10','#5850a0','#b0ec0c','#d8f0ac'],
-    ['#f29820','#4c60a0','#c8e800','#e8f4ae'],
-    ['#f0a830','#3c70a8','#dce400','#f4f8b0'],
-  ];
-
-  var blobs = Array.from(document.querySelectorAll('.aurora-blob'));
-
-  function setColors(p){
-    blobs.forEach(function(b,i){
-      b.style.background='radial-gradient(circle,'+p[i]+' 0%,transparent 70%)';
+  var targets={
+    'counter-500':'500',
+    'counter-4':'4',
+    'counter-24':'24',
+    'counter-100':'100'
+  };
+  var done=false;
+  function runCounters(){
+    if(done) return; done=true;
+    document.querySelectorAll('.hs-n').forEach(function(el,i){
+      var end=parseInt(el.textContent);
+      if(isNaN(end)) return;
+      var suffix=el.textContent.replace(/[0-9]/g,'');
+      var start=0, dur=1400, startTime=null;
+      function step(ts){
+        if(!startTime) startTime=ts;
+        var p=Math.min((ts-startTime)/dur,1);
+        var ease=1-Math.pow(1-p,3);
+        el.textContent=Math.round(ease*end)+suffix;
+        if(p<1) requestAnimationFrame(step);
+      }
+      setTimeout(function(){requestAnimationFrame(step)},i*120);
     });
   }
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting) runCounters();});
+  },{threshold:.5});
+  var stats=document.querySelector('.hero-stats');
+  if(stats) obs.observe(stats);
+})();
 
-  function getProgress(){
-    var total = document.body.scrollHeight - window.innerHeight;
-    if(total<=0) return 0;
-    return Math.max(0, Math.min(1, window.scrollY/total));
-  }
+/* ── MARQUEE CLONE ── */
+(function(){
+  var track=document.getElementById('marqueeTrack');
+  if(!track) return;
+  var clone=track.cloneNode(true);
+  clone.setAttribute('aria-hidden','true');
+  track.parentNode.appendChild(clone);
+  var w=track.scrollWidth;
+  track.style.animation='marqueeRun '+Math.round(w/60)+'s linear infinite';
+  clone.style.animation='marqueeRun '+Math.round(w/60)+'s linear infinite';
+})();
 
-  function apply(){
-    var p = getProgress();
-    var scaled = p * (stops.length-1);
-    var idx = Math.min(Math.floor(scaled), stops.length-2);
-    var t = scaled - idx;
-    var s1=stops[idx], s2=stops[idx+1];
-    var blended = s1.map(function(c1,i){
-      var c2=s2[i];
-      var r1=parseInt(c1.slice(1,3),16), g1=parseInt(c1.slice(3,5),16), b1=parseInt(c1.slice(5,7),16);
-      var r2=parseInt(c2.slice(1,3),16), g2=parseInt(c2.slice(3,5),16), b2=parseInt(c2.slice(5,7),16);
-      var r=Math.round(r1+(r2-r1)*t), g=Math.round(g1+(g2-g1)*t), b=Math.round(b1+(b2-b1)*t);
-      return 'rgb('+r+','+g+','+b+')';
+/* ── MARQUEE KEYFRAME (dynamic) ── */
+(function(){
+  var style=document.createElement('style');
+  style.textContent='@keyframes marqueeRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}';
+  document.head.appendChild(style);
+})();
+
+
+
+/* ── THEME ── */
+(function(){
+  var btn=document.getElementById('themeToggle');
+  var ic=btn.querySelector('i');
+  if(localStorage.getItem('yt_theme')==='light'){document.body.classList.add('light');ic.className='fa-solid fa-sun';}
+  btn.addEventListener('click',function(){
+    document.body.classList.toggle('light');
+    var l=document.body.classList.contains('light');
+    ic.className=l?'fa-solid fa-sun':'fa-solid fa-moon';
+    localStorage.setItem('yt_theme',l?'light':'dark');
+  });
+})();
+
+/* ── NAV ── */
+(function(){
+  var hb=document.getElementById('hamburger'),nl=document.getElementById('navLinks');
+  hb.addEventListener('click',function(){nl.classList.toggle('open')});
+  nl.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nl.classList.remove('open')})});
+})();
+
+/* ── REVEAL ── */
+(function(){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(function(r){io.observe(r)});
+})();
+
+/* ── SERVICE LINK ── */
+document.querySelectorAll('[data-svc]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var s=document.getElementById('serviceSelect');
+    if(s) s.selectedIndex=+btn.dataset.svc;
+  });
+});
+
+/* ── FAQ ── */
+function toggleFaq(btn){
+  var item=btn.closest('.faq-item');
+  var open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open')});
+  if(!open) item.classList.add('open');
+}
+
+/* ── FLOAT CONTACT ── */
+function toggleFloat(){
+  var p=document.getElementById('floatPopup'),ic=document.getElementById('floatIcon');
+  p.classList.toggle('open');
+  ic.className=p.classList.contains('open')?'fa-solid fa-xmark':'fa-solid fa-message';
+}
+async function sendFloat(){
+  var name=document.getElementById('fName').value.trim();
+  var phone=document.getElementById('fPhone').value.trim();
+  var msg=document.getElementById('fMsg').value.trim();
+  if(!name||!phone){return;}
+  var btn=document.querySelector('.float-popup .btn-glow');
+  btn.textContent='שולח...';btn.disabled=true;
+  try{
+    var fd=new FormData();fd.append('שם',name);fd.append('טלפון',phone);fd.append('הודעה',msg);
+    await fetch('https://formspree.io/f/xnjwkvvq',{method:'POST',body:fd,headers:{Accept:'application/json'}});
+    document.getElementById('floatSent').style.display='block';
+    btn.style.display='none';
+    ['fName','fPhone','fMsg'].forEach(function(id){document.getElementById(id).value='';});
+    setTimeout(function(){document.getElementById('floatSent').style.display='none';btn.style.display='';btn.innerHTML='<i class="fa-solid fa-paper-plane"></i> שלח';btn.disabled=false;toggleFloat();},3000);
+  }catch(e){btn.innerHTML='<i class="fa-solid fa-paper-plane"></i> שלח';btn.disabled=false;}
+}
+
+/* ── COUNTERS ── */
+(function(){
+  var done=false;
+  function run(){
+    if(done)return;done=true;
+    document.querySelectorAll('.hb-n').forEach(function(el,i){
+      var txt=el.textContent;
+      var num=parseInt(txt);if(isNaN(num))return;
+      var suf=txt.replace(/[0-9]/g,'');
+      var dur=1400,start=null;
+      setTimeout(function(){
+        requestAnimationFrame(function step(ts){
+          if(!start)start=ts;
+          var p=Math.min((ts-start)/dur,1);
+          var e=1-Math.pow(1-p,3);
+          el.textContent=Math.round(e*num)+suf;
+          if(p<1)requestAnimationFrame(step);
+        });
+      },i*100);
     });
-    setColors(blended);
   }
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)run();});},{threshold:.5});
+  var s=document.querySelector('.hero-bar');if(s)obs.observe(s);
+})();
 
-  var ticking=false;
-  window.addEventListener('scroll',function(){
-    if(!ticking){ ticking=true; requestAnimationFrame(function(){ apply(); ticking=false; }); }
-  },{passive:true});
-
-  apply();
+/* ── MARQUEE CLONE ── */
+(function(){
+  var t=document.getElementById('mqTrack');if(!t)return;
+  var c=t.cloneNode(true);c.setAttribute('aria-hidden','true');
+  t.parentNode.appendChild(c);
+  var style=document.createElement('style');
+  style.textContent='@keyframes mqRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}';
+  document.head.appendChild(style);
 })();
 
 </script>
