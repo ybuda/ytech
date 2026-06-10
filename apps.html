@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>YTech Apps</title>
+
+<link rel="icon" type="image/x-icon" href="favsion.ico?v=3"/>
+<link rel="shortcut icon" type="image/x-icon" href="favsion.ico?v=3"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+
+*,*::before,*::after{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+:root{
+--bg:#080810;
+--glass:rgba(255,255,255,.04);
+--glass2:rgba(255,255,255,.07);
+--border:rgba(255,255,255,.08);
+--text:#f4f0ff;
+--muted:#8878aa;
+--p:#a855f7;
+--p2:#7c3aed;
+--pk:#ec4899;
+--cy:#22d3ee;
+--or:#f97316;
+--gr:#4ade80;
+}
+
+body{
+font-family:'Heebo',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+line-height:1.7;
+}
+
+/* BG */
+
+#bg{
+position:fixed;
+inset:0;
+z-index:0;
+overflow:hidden;
+pointer-events:none;
+}
+
+#bg-grad{
+position:absolute;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%, rgba(168,85,247,.18), transparent 40%),
+radial-gradient(circle at 80% 70%, rgba(236,72,153,.12), transparent 40%),
+radial-gradient(circle at 60% 40%, rgba(34,211,238,.08), transparent 40%);
+animation:bgMove 18s linear infinite alternate;
+}
+
+@keyframes bgMove{
+0%{transform:scale(1);}
+100%{transform:scale(1.08);}
+}
+
+#bg::after{
+content:'';
+position:absolute;
+inset:0;
+background:rgba(8,8,16,.55);
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:1rem;
+right:50%;
+transform:translateX(50%);
+z-index:999;
+display:flex;
+align-items:center;
+gap:1rem;
+background:rgba(20,16,32,.75);
+backdrop-filter:blur(20px);
+border:1px solid var(--border);
+border-radius:100px;
+padding:.55rem .55rem .55rem 1.3rem;
+}
+
+.nav-logo{
+font-family:'Space Grotesk',sans-serif;
+font-size:1.1rem;
+font-weight:800;
+background:linear-gradient(90deg,var(--p),var(--pk));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.nav-links{
+display:flex;
+gap:.25rem;
+list-style:none;
+}
+
+.nav-links a{
+color:var(--muted);
+text-decoration:none;
+padding:.38rem .9rem;
+border-radius:100px;
+font-size:.85rem;
+font-weight:600;
+transition:.2s;
+}
+
+.nav-links a:hover{
+background:var(--glass2);
+color:var(--text);
+}
+
+.nav-icon-btn{
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid var(--border);
+background:var(--glass2);
+color:var(--muted);
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.2s;
+}
+
+.nav-icon-btn:hover{
+color:var(--p);
+}
+
+/* PAGE */
+
+.page{
+position:relative;
+z-index:1;
+}
+
+section{
+max-width:1150px;
+margin:auto;
+padding:120px 1.5rem 70px;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding-top:180px;
+padding-bottom:80px;
+}
+
+.hero-label{
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.4rem 1rem;
+border-radius:100px;
+background:rgba(168,85,247,.1);
+border:1px solid rgba(168,85,247,.2);
+color:var(--p);
+font-size:.75rem;
+font-weight:700;
+margin-bottom:1.5rem;
+}
+
+.hero h1{
+font-family:'Space Grotesk',sans-serif;
+font-size:clamp(3rem,8vw,6rem);
+font-weight:800;
+line-height:1;
+letter-spacing:-2px;
+margin-bottom:1.2rem;
+}
+
+.hero h1 span{
+background:linear-gradient(90deg,var(--p),var(--pk),var(--or));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+max-width:650px;
+margin:auto;
+font-size:1.05rem;
+color:var(--muted);
+}
+
+/* GRID */
+
+.apps-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:1.4rem;
+margin-top:3rem;
+}
+
+/* CARD */
+
+.app-card{
+background:var(--glass);
+border:1px solid var(--border);
+border-radius:24px;
+padding:2rem;
+backdrop-filter:blur(14px);
+position:relative;
+overflow:hidden;
+transition:.25s;
+}
+
+.app-card:hover{
+transform:translateY(-6px);
+border-color:rgba(255,255,255,.15);
+}
+
+.app-card::before{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at top, rgba(255,255,255,.06), transparent 70%);
+opacity:0;
+transition:.3s;
+}
+
+.app-card:hover::before{
+opacity:1;
+}
+
+.app-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:1.2rem;
+}
+
+.app-icon{
+width:58px;
+height:58px;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:1.4rem;
+background:rgba(168,85,247,.12);
+color:var(--p);
+border:1px solid rgba(168,85,247,.2);
+}
+
+.free-tag{
+padding:.35rem .8rem;
+border-radius:100px;
+font-size:.72rem;
+font-weight:700;
+background:rgba(74,222,128,.1);
+border:1px solid rgba(74,222,128,.2);
+color:var(--gr);
+}
+
+.app-name{
+font-size:1.35rem;
+font-weight:800;
+margin-bottom:.7rem;
+}
+
+.app-desc{
+font-size:.92rem;
+color:var(--muted);
+line-height:1.9;
+margin-bottom:1.5rem;
+white-space:pre-line;
+}
+
+.features{
+display:flex;
+flex-wrap:wrap;
+gap:.5rem;
+margin-bottom:1.5rem;
+}
+
+.feature{
+padding:.38rem .7rem;
+border-radius:100px;
+background:rgba(255,255,255,.05);
+border:1px solid var(--border);
+font-size:.75rem;
+color:var(--text);
+}
+
+.app-buttons{
+display:flex;
+flex-wrap:wrap;
+gap:.8rem;
+margin-top:auto;
+}
+
+/* BUTTONS */
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.78rem 1.2rem;
+border-radius:12px;
+font-size:.88rem;
+font-weight:700;
+text-decoration:none;
+transition:.2s;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+}
+
+.btn-download{
+background:linear-gradient(135deg,var(--p2),var(--p));
+color:#fff;
+box-shadow:0 4px 24px rgba(168,85,247,.35);
+}
+
+.btn-download:hover{
+box-shadow:0 8px 28px rgba(168,85,247,.55);
+}
+
+.btn-topic{
+background:var(--glass2);
+border:1px solid var(--border);
+color:var(--text);
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:2rem;
+border-top:1px solid var(--border);
+color:var(--muted);
+font-size:.85rem;
+position:relative;
+z-index:1;
+}
+
+footer a{
+color:var(--p);
+text-decoration:none;
+}
+
+/* LIGHT */
+
+body.light{
+--bg:#f5f3ff;
+--glass:rgba(255,255,255,.7);
+--glass2:rgba(255,255,255,.82);
+--border:rgba(0,0,0,.08);
+--text:#111;
+--muted:#6b5f8a;
+}
+
+body.light nav{
+background:rgba(255,255,255,.8);
+}
+
+body.light #bg::after{
+background:rgba(245,243,255,.5);
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+nav{
+right:1rem;
+left:1rem;
+transform:none;
+border-radius:18px;
+}
+
+.nav-links{
+display:none;
+}
+
+.hero{
+padding-top:150px;
+}
+
+.app-buttons{
+flex-direction:column;
+}
+
+.btn{
+justify-content:center;
+width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="bg">
+<div id="bg-grad"></div>
+</div>
+
+<!-- NAV -->
+
+<nav>
+
+<div class="nav-logo">YTech</div>
+
+<ul class="nav-links">
+<li><a href="index.html">ראשי</a></li>
+<li><a href="index.html#services">שירותים</a></li>
+<li><a href="apps.html">אפליקציות</a></li>
+<li><a href="index.html#contact">צור קשר</a></li>
+</ul>
+
+<button class="nav-icon-btn" id="themeToggle">
+<i class="fa-solid fa-moon"></i>
+</button>
+
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-label">
+<i class="fa-solid fa-mobile-screen"></i>
+אפליקציות להורדה
+</div>
+
+<h1>
+האפליקציות של <span>YTech</span>
+</h1>
+
+<p>
+אפליקציות שימושיות לאנדרואיד — להורדה חינמית, עם ממשק נוח ותמיכה מלאה בעברית.
+</p>
+
+<div class="apps-grid">
+
+<!-- APP 1 -->
+
+<div class="app-card">
+
+<div class="app-top">
+<div class="app-icon">
+<i class="fa-solid fa-toolbox"></i>
+</div>
+
+<div class="free-tag">
+חינמי
+</div>
+</div>
+
+<div class="app-name">
+האולר היהודי
+</div>
+
+<div class="app-desc">
+נתקעתם בלי ברכון?
+צריכים תפילת הדרך?
+אין מראה לתפילין?
+
+האפליקציה כוללת מגוון כלים שימושיים במקום אחד.
+</div>
+
+<div class="features">
+<div class="feature">מראה לתפילין</div>
+<div class="feature">ברכת המזון</div>
+<div class="feature">תפילת הדרך</div>
+<div class="feature">קשירת עניבה</div>
+<div class="feature">טיימר בשרי</div>
+<div class="feature">התראות זמן</div>
+</div>
+
+<div class="app-buttons">
+
+<a href="olar.apk" download class="btn btn-download">
+<i class="fa-solid fa-download"></i>
+הורד APK
+</a>
+
+<a href="https://mitmachim.top/post/1095321" target="_blank" class="btn btn-topic">
+<i class="fa-solid fa-comments"></i>
+נושא במתמחים טופ
+</a>
+
+</div>
+
+</div>
+
+<!-- APP 2 -->
+
+<div class="app-card">
+
+<div class="app-top">
+<div class="app-icon">
+<i class="fa-solid fa-mobile"></i>
+</div>
+
+<div class="free-tag">
+חינמי
+</div>
+</div>
+
+<div class="app-name">
+App Manager
+</div>
+
+<div class="app-desc">
+כלי מתקדם לניהול אפליקציות באנדרואיד.
+
+כולל הסרת אפליקציות מערכת, שחזור אפליקציות, התקנת APK וחיפוש חכם בין חבילות מותקנות.
+</div>
+
+<div class="features">
+<div class="feature">Debloater</div>
+<div class="feature">שחזור אפליקציות</div>
+<div class="feature">התקנת APK</div>
+<div class="feature">חיפוש חכם</div>
+<div class="feature">ניהול מערכת</div>
+</div>
+
+<div class="app-buttons">
+
+<a href="app-v28.rar" download class="btn btn-download">
+<i class="fa-solid fa-download"></i>
+הורד קובץ
+</a>
+
+<a href="https://mitmachim.top/post/1066922" target="_blank" class="btn btn-topic">
+<i class="fa-solid fa-comments"></i>
+נושא במתמחים טופ
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+© 2026 YTech · כל הזכויות שמורות ·
+<a href="index.html">חזרה לאתר הראשי ↑</a>
+</footer>
+
+<script>
+
+/* THEME */
+
+(function(){
+
+const btn=document.getElementById('themeToggle');
+const icon=btn.querySelector('i');
+
+const saved=localStorage.getItem('yt_theme');
+
+if(saved==='light'){
+document.body.classList.add('light');
+icon.className='fa-solid fa-sun';
+}
+
+btn.addEventListener('click',()=>{
+
+document.body.classList.toggle('light');
+
+const isLight=document.body.classList.contains('light');
+
+icon.className=isLight
+?'fa-solid fa-sun'
+:'fa-solid fa-moon';
+
+localStorage.setItem('yt_theme',isLight?'light':'dark');
+
+});
+
+})();
+
+</script>
+
+</body>
+</html>
