@@ -499,6 +499,12 @@ body.light .overlay{background:rgba(220,215,240,.92)}
     <span class="mq-item"><i class="fa-solid fa-mobile-screen-button"></i> 500+ מכשירים</span>
     <span class="mq-item"><i class="fa-solid fa-clock"></i> מענה 24 שעות</span>
     <span class="mq-item"><i class="fa-solid fa-wrench"></i> מקצועי ומדויק</span>
+     <span class="mq-item"><i class="fa-solid fa-bolt"></i> שירות מהיר</span>
+    <span class="mq-item"><i class="fa-solid fa-star"></i> 100% שביעות רצון</span>
+    <span class="mq-item"><i class="fa-solid fa-shield-halved"></i> אחריות מלאה</span>
+    <span class="mq-item"><i class="fa-solid fa-mobile-screen-button"></i> 500+ מכשירים</span>
+    <span class="mq-item"><i class="fa-solid fa-clock"></i> מענה 24 שעות</span>
+    <span class="mq-item"><i class="fa-solid fa-wrench"></i> מקצועי ומדויק</span>
   </div>
 </div>
 
@@ -681,60 +687,6 @@ body.light .overlay{background:rgba(220,215,240,.92)}
 
 <footer><p>© 2026 YTech · עוצב ופותח בישראל · <a href="#hero">חזרה למעלה ↑</a></p></footer>
 
-<!-- LOGIN -->
-<div class="overlay" id="loginOverlay">
-  <div class="login-box">
-    <button class="login-close" onclick="closeLogin()"><i class="fa-solid fa-xmark"></i></button>
-    <div class="login-icon"><i class="fa-solid fa-lock"></i></div>
-    <h2>כניסת מנהל</h2>
-    <p>הכנס את הסיסמה לגישה לפאנל</p>
-    <input type="password" id="pwInput" placeholder="••••••••" dir="ltr" autocomplete="off"/>
-    <div class="login-err" id="loginErr"></div>
-    <button class="btn btn-glow" style="width:100%;justify-content:center" onclick="checkPass()"><i class="fa-solid fa-right-to-bracket"></i> כניסה</button>
-  </div>
-</div>
-
-<!-- ADMIN -->
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-topbar">
-    <h2><i class="fa-solid fa-screwdriver-wrench"></i> פאנל ניהול – YTech</h2>
-    <button class="btn btn-glass btn-sm" onclick="closeAdmin()"><i class="fa-solid fa-xmark"></i> יציאה</button>
-  </div>
-  <div class="admin-content">
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab('dashboard',this)"><i class="fa-solid fa-chart-bar"></i> סקירה</button>
-      <button class="admin-tab" onclick="switchTab('addApp',this)"><i class="fa-solid fa-plus"></i> הוסף פרויקט</button>
-      <button class="admin-tab" onclick="switchTab('manageApps',this)"><i class="fa-solid fa-boxes-stacked"></i> ניהול פרויקטים</button>
-    </div>
-    <div class="admin-tab-content active" id="tab-dashboard">
-      <div class="stats-row" id="adminStats"></div>
-      <div class="admin-card"><h3>ברוך הבא!</h3><p style="color:var(--muted);font-size:.9rem;line-height:1.7">מכאן תוכל לנהל את כל האפליקציות שמוצגות באתר.</p></div>
-    </div>
-    <div class="admin-tab-content" id="tab-addApp">
-      <div class="admin-card">
-        <h3>הוסף פרויקט חדש</h3>
-        <div class="admin-form-row">
-          <div class="admin-group"><label>שם *</label><input type="text" id="a_name" placeholder="RootMaster Pro"/></div>
-          <div class="admin-group"><label>קטגוריה *</label><select id="a_cat"><option value="אפליקציה">אפליקציה</option><option value="תוכנה">תוכנה</option><option value="כלי מפתח">כלי מפתח</option><option value="משחק">משחק</option><option value="אחר">אחר</option></select></div>
-        </div>
-        <div class="admin-form-row">
-          <div class="admin-group"><label>אימוג'י</label><input type="text" id="a_emoji" placeholder="📱" maxlength="4"/></div>
-          <div class="admin-group"><label>מחיר (ריק=חינמי)</label><input type="text" id="a_price" placeholder="15₪"/></div>
-        </div>
-        <div class="admin-group"><label>תיאור *</label><input type="text" id="a_desc" placeholder="תיאור קצר..."/></div>
-        <div class="admin-group"><label>קישור</label><input type="url" id="a_link" placeholder="https://..." dir="ltr"/></div>
-        <div class="admin-group"><label>תגיות</label><input type="text" id="a_tags" placeholder="אנדרואיד, רוט"/></div>
-        <div style="display:flex;gap:.7rem;flex-wrap:wrap">
-          <button class="btn btn-glow" onclick="addApp()"><i class="fa-solid fa-floppy-disk"></i> שמור</button>
-          <button class="btn btn-glass btn-sm" onclick="clearAppForm()"><i class="fa-solid fa-trash"></i> נקה</button>
-        </div>
-      </div>
-    </div>
-    <div class="admin-tab-content" id="tab-manageApps">
-      <div class="admin-card"><h3>כל הפרויקטים (<span id="appsCount">0</span>)</h3><div id="adminAppList"><p style="color:var(--muted);font-size:.88rem">אין פרויקטים עדיין.</p></div></div>
-    </div>
-  </div>
-</div>
 
 <!-- FLOATING CONTACT -->
 <button class="float-btn" id="floatBtn" onclick="toggleFloat()"><i class="fa-solid fa-message" id="floatIcon"></i></button>
