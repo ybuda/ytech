@@ -241,6 +241,9 @@ section{max-width:1100px;margin:0 auto;padding:110px 2rem 70px}
 .bc-cy .bcard-accent{background:linear-gradient(90deg,#0891b2,var(--cy))}
 .bc-cy .bcard-ico{background:rgba(34,211,238,.08);color:var(--cy)}
 .bc-cy .bcard-tag{color:var(--cy)}
+.bc-gr .bcard-accent{background:linear-gradient(90deg,#059669,#4ade80)}
+.bc-gr .bcard-ico{background:rgba(74,222,128,.1);color:#4ade80}
+.bc-gr .bcard-tag{color:#4ade80}
 
 /* ── PROCESS ── */
 .proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;position:relative}
@@ -485,7 +488,8 @@ body.light .divider{background:rgba(80,50,180,.1)}
   <div class="nav-logo">YTech</div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">ראשי</a></li>
-    <li><a href="#services">מחירים</a></li>
+    <li><a href="#pricing">מחירון</a></li>
+    <li><a href="#services">שירותי אנדרואיד</a></li>
     <li><a href="apps.html">אפליקציות</a></li>
     <li><a href="#order">הזמנה</a></li>
     <li><a href="#contact">צור קשר</a></li>
@@ -501,8 +505,8 @@ body.light .divider{background:rgba(80,50,180,.1)}
 <section id="hero">
   <div class="hero-label"><i class="fa-solid fa-mobile-screen-button"></i> מפתח אנדרואיד מקצועי</div>
   <h1 class="hero-title">
-    <span class="line1">YTech </span>
-    <span class="line2">פתרונות אנדרואיד</span>
+    <span class="line1">מכשיר שלך,</span>
+    <span class="line2">בידיים טובות</span>
   </h1>
   <p class="hero-desc">רוט, צריבת גרסה, חסימות מתקדמות ועוד – שירות מהיר, מקצועי ובמחיר הוגן.</p>
   <div class="hero-cta">
@@ -536,6 +540,50 @@ body.light .divider{background:rgba(80,50,180,.1)}
 </div>
 
 <div class="divider" style="margin-top:0"></div>
+
+<!-- PRICING -->
+<section id="pricing" style="text-align:center;max-width:980px">
+  <div class="reveal">
+    <div class="sec-eyebrow ey-or"><i class="fa-solid fa-tags"></i> מחירון</div>
+    <h2 class="sec-h">כלים טכנולוגיים ברמה גבוהה</h2>
+    <p class="sec-sub">במחירים מיוחדים ונוחים.</p>
+  </div>
+  <div class="pricing-grid reveal">
+
+    <!-- תוספים וסקריפטים -->
+    <div class="p-card">
+      <div class="p-ico ico-blue"><i class="fa-brands fa-chrome" style="color:#4285f4"></i></div>
+      <div class="p-name">תוספים וסקריפטים</div>
+      <div class="p-desc">תוספי כרום, סקריפטים ועוד התאמה אישית.</div>
+      <div class="p-price">199<sub> ₪</sub></div>
+      <a href="#order" class="p-btn p-btn-dark" onclick="setService('פיתוח תוספים לכרום – מ-199₪')"><i class="fa-solid fa-envelope"></i> פנו להצעת מחיר</a>
+    </div>
+
+    <!-- בניית אתר תדמית -->
+    <div class="p-card featured">
+      <div class="p-badge">מומלץ ופופולרי</div>
+      <div class="p-ico ico-yellow"><i class="fa-solid fa-laptop-code" style="color:#f59e0b"></i></div>
+      <div class="p-name">בניית אתר תדמית</div>
+      <div class="p-desc">אתר מותאם אישית לכלול לוגו מקצועי, מעוצב, מהיר ומותאם לכל המכשירים.</div>
+      <div class="p-price">399<sub> ₪</sub></div>
+      <div class="p-price-note">רק</div>
+      <a href="#order" class="p-btn p-btn-yellow" onclick="setService('בניית אתר תדמית – 399₪')"><i class="fa-solid fa-paper-plane"></i> להזמנה ויצירת קשר</a>
+    </div>
+
+    <!-- תוכנות/אפליקציות -->
+    <div class="p-card">
+      <div class="p-ico ico-purple"><i class="fa-solid fa-mobile-screen-button" style="color:#7c3aed"></i></div>
+      <div class="p-name">תוכנות/אפליקציות</div>
+      <div class="p-desc">שרות בניה ערכה, שדרוג ועוד.</div>
+      <div class="p-price">399<sub> ₪</sub></div>
+      <div class="p-price-note">החל מ-</div>
+      <a href="#order" class="p-btn p-btn-dark" onclick="setService('פיתוח תוכנה/אפליקציה – מ-399₪')"><i class="fa-solid fa-envelope"></i> פנו להצעת מחיר</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- SERVICES BENTO -->
 <section id="services" style="text-align:center">
@@ -581,6 +629,19 @@ body.light .divider{background:rgba(80,50,180,.1)}
       <div class="bcard-desc">תרגום ממשק אפליקציה לעברית עם RTL מלא.</div>
       <a href="#order" class="btn btn-pk btn-sm" data-svc="4" style="align-self:flex-start">הזמן <i class="fa-solid fa-arrow-left"></i></a>
     </div>
+
+
+    <div class="bcard bc-or">
+      <div class="bcard-accent"></div>
+      <div class="bcard-ico"><i class="fa-brands fa-magento" style="font-style:normal">M</i></div>
+      <div class="bcard-price">99<sub>₪</sub></div>
+      <div style="font-size:.8rem;color:var(--or);font-weight:600;margin-top:-.4rem">ומעלה</div>
+      <div class="bcard-name">מודולים למג'יסק</div>
+      <div class="bcard-tag">פיתוח Magisk Modules</div>
+      <div class="bcard-desc">פיתוח מודולים מותאמים אישית למג'יסק – שינויים למערכת, tweaks ותוספות ייחודיות למכשיר.</div>
+      <a href="#order" class="btn btn-or btn-sm" data-svc="5" style="align-self:flex-start">הזמן <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+
   </div>
 </section>
 
@@ -639,6 +700,10 @@ body.light .divider{background:rgba(80,50,180,.1)}
           <option value="צריבת גרסה – 50₪">צריבת גרסה – 50₪</option>
           <option value="הכשרת נגנים – 50₪">הכשרת נגנים – 50₪</option>
           <option value="תרגום אפליקציה – 10₪">תרגום אפליקציה – 10₪</option>
+          <option value="מודולים למג'יסק – מ-99₪">מודולים למג'יסק – מ-99₪</option>
+          <option value="פיתוח תוספים לכרום – מ-199₪">פיתוח תוספים לכרום – מ-199₪</option>
+          <option value="בניית אתר תדמית – 399₪">בניית אתר תדמית – 399₪</option>
+          <option value="פיתוח תוכנה/אפליקציה – מ-399₪">פיתוח תוכנה/אפליקציה – מ-399₪</option>
           <option value="אחר">אחר</option>
         </select>
       </div>
@@ -663,8 +728,8 @@ body.light .divider{background:rgba(80,50,180,.1)}
   </div>
   <div class="slider-wrapper reveal">
     <div class="slider-track" id="sliderTrack">
-      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">עשה לי רוט  ל M36 בלי שום בעיה. המכשיר עובד מעולה, שירות מהיר ומקצועי לגמרי!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">יוסי כהן</div><div class="slide-role">לקוח מרוצה</div></div></div></div>
-      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">המכשיר שלי היה תקוע בלופ אתחול שבועיים, YTech תיקן אותו תוך שנייה בצריבה. מדהים!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">שירה לוי</div><div class="slide-role">לקוחה מרוצה</div></div></div></div>
+      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">עשה לי רוט לגלקסי S23 בלי שום בעיה. המכשיר עובד מעולה, שירות מהיר ומקצועי לגמרי!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">יוסי כהן</div><div class="slide-role">לקוח מרוצה</div></div></div></div>
+      <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">המכשיר שלי היה תקוע בלופ אתחול שבועיים, YTech תיקן אותו תוך שעה בצריבה. מדהים!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">שירה לוי</div><div class="slide-role">לקוחה מרוצה</div></div></div></div>
       <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">ביקשתי הכשרת נגנים לטאבלט של הילדים. עבודה מדויקת, חסם בדיוק מה שביקשתי. שווה כל שקל!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">דוד אברהם</div><div class="slide-role">לקוח מרוצה</div></div></div></div>
       <div class="slide"><div class="slide-stars">★★★★★</div><div class="slide-text">תרגם לי אפליקציה שלמה לעברית עם RTL מלא. התוצאה מקצועית לחלוטין, מחיר מצחיק של 10 שקל!</div><div class="slide-author"><div class="slide-av"><i class="fa-solid fa-user"></i></div><div><div class="slide-name">מיכל ברק</div><div class="slide-role">לקוחה מרוצה</div></div></div></div>
     </div>
@@ -800,9 +865,7 @@ const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.tar
 document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
 
 /* ── PRICING LINK ── */
-document.querySelectorAll('[data-svc]').forEach(btn=>btn.addEventListener('click',()=>{
-  const s=document.getElementById('serviceSelect');if(s)s.selectedIndex=+btn.dataset.svc;
-}));
+
 
 
 /* ── TOAST ── */
@@ -986,6 +1049,17 @@ async function submitForm(){
   }
 }
 
+
+
+function setService(val){
+  var s=document.getElementById('serviceSelect');
+  if(!s)return;
+  for(var i=0;i<s.options.length;i++){
+    if(s.options[i].value===val){s.selectedIndex=i;break;}
+  }
+  var order=document.getElementById('order');
+  if(order)order.scrollIntoView({behavior:'smooth',block:'start'});
+}
 
 /* INIT */
 
