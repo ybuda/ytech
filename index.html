@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>YTech – תיקון ופיתוח אנדרואיד</title>
+<title>YTech – פיתוח טכנולוגי מקצועי</title>
 <link rel="icon" type="image/x-icon" href="favsion.ico?v=3"/>
 <link rel="shortcut icon" type="image/x-icon" href="favsion.ico?v=3"/>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -476,6 +476,77 @@ body.light .divider{background:rgba(80,50,180,.1)}
   .proc-grid::before{display:none}
   section{padding:90px 1.2rem 50px}
 }
+
+/* ── PRICING SECTION ── */
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+  align-items:start;
+  max-width:900px;
+  margin:0 auto;
+}
+.p-card{
+  background:rgba(255,255,255,.82);
+  border:1.5px solid rgba(0,140,200,.15);
+  border-radius:20px;
+  padding:2rem 1.6rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:.85rem;
+  position:relative;
+  transition:transform .25s,box-shadow .25s;
+  backdrop-filter:blur(10px);
+}
+.p-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.1)}
+.p-card.featured{
+  border-color:#f59e0b;
+  border-width:2px;
+  transform:translateY(-10px);
+  box-shadow:0 12px 40px rgba(245,158,11,.22);
+  background:rgba(255,255,255,.9);
+}
+.p-card.featured:hover{transform:translateY(-15px)}
+.p-badge{
+  position:absolute;top:-14px;right:50%;transform:translateX(50%);
+  background:linear-gradient(135deg,#f59e0b,#fbbf24);
+  color:#fff;font-size:.72rem;font-weight:800;
+  padding:.3rem .9rem;border-radius:100px;
+  white-space:nowrap;box-shadow:0 4px 12px rgba(245,158,11,.35);
+}
+.p-ico{
+  width:68px;height:68px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+}
+.ico-blue{background:rgba(66,133,244,.1)}
+.ico-yellow{background:rgba(245,158,11,.1)}
+.ico-purple{background:rgba(124,58,237,.1)}
+.p-name{font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;color:#0a1f2e}
+.p-desc{font-size:.86rem;color:#3a6080;line-height:1.65;min-height:3.2rem}
+.p-price{font-family:'Space Grotesk',sans-serif;font-size:2.6rem;font-weight:800;color:#f59e0b;line-height:1}
+.p-price sub{font-size:.95rem;font-weight:600;color:#3a6080;vertical-align:middle}
+.p-price-note{font-size:.76rem;color:#3a6080;margin-top:-.3rem}
+.p-btn{
+  width:100%;padding:.78rem 1rem;border-radius:12px;
+  font-family:'Heebo',sans-serif;font-size:.92rem;font-weight:700;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  text-decoration:none;transition:transform .15s,box-shadow .15s;
+  margin-top:.3rem;
+}
+.p-btn:hover{transform:translateY(-2px)}
+.p-btn-dark{background:#1e3a5f;color:#fff;box-shadow:0 4px 14px rgba(30,58,95,.25)}
+.p-btn-dark:hover{box-shadow:0 8px 20px rgba(30,58,95,.35)}
+.p-btn-yellow{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#fff;box-shadow:0 4px 14px rgba(245,158,11,.35)}
+.p-btn-yellow:hover{box-shadow:0 8px 20px rgba(245,158,11,.5)}
+@media(max-width:720px){
+  .pricing-grid{grid-template-columns:1fr}
+  .p-card.featured{transform:none}
+  .p-card.featured:hover{transform:translateY(-5px)}
+}
+
 </style>
 </head>
 <body>
@@ -489,7 +560,7 @@ body.light .divider{background:rgba(80,50,180,.1)}
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">ראשי</a></li>
     <li><a href="#pricing">מחירון</a></li>
-    <li><a href="#services">שירותי אנדרואיד</a></li>
+    <li><a href="#services">שירותים</a></li>
     <li><a href="apps.html">אפליקציות</a></li>
     <li><a href="#order">הזמנה</a></li>
     <li><a href="#contact">צור קשר</a></li>
@@ -503,19 +574,19 @@ body.light .divider{background:rgba(80,50,180,.1)}
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-label"><i class="fa-solid fa-mobile-screen-button"></i> מפתח אנדרואיד מקצועי</div>
+  <div class="hero-label"><i class="fa-solid fa-code"></i> מפתח ומתכנת מקצועי</div>
   <h1 class="hero-title">
-    <span class="line1">מכשיר שלך,</span>
-    <span class="line2">בידיים טובות</span>
+    <span class="line1">YTech</span>
+    <span class="line2">פיתוח טכנולוגיה.</span>
   </h1>
-  <p class="hero-desc">רוט, צריבת גרסה, חסימות מתקדמות ועוד – שירות מהיר, מקצועי ובמחיר הוגן.</p>
+  <p class="hero-desc">פיתוח תוספים, אתרים, אפליקציות ושירותים – מקצועי, מהיר ובמחיר הוגן.</p>
   <div class="hero-cta">
     <a href="#services" class="btn btn-glow"><i class="fa-solid fa-list"></i> ראה מחירים</a>
     <a href="#order"    class="btn btn-glass"><i class="fa-solid fa-phone"></i> הזמן שירות</a>
   </div>
   <div class="hero-bar">
     <div class="hb"><div class="hb-n" style="color:var(--p)">500+</div><div class="hb-l">מכשירים טופלו</div></div>
-    <div class="hb"><div class="hb-n" style="color:var(--pk)">4</div><div class="hb-l">שירותים מרכזיים</div></div>
+    <div class="hb"><div class="hb-n" style="color:var(--pk)">4</div><div class="hb-l">תחומי פיתוח</div></div>
     <div class="hb"><div class="hb-n" style="color:var(--or)">24h</div><div class="hb-l">זמן תגובה</div></div>
     <div class="hb"><div class="hb-n" style="color:var(--cy)">100%</div><div class="hb-l">שביעות רצון</div></div>
   </div>
@@ -589,7 +660,7 @@ body.light .divider{background:rgba(80,50,180,.1)}
 <section id="services" style="text-align:center">
   <div class="reveal">
     <div class="sec-eyebrow ey-p"><i class="fa-solid fa-shekel-sign"></i> תעריפים</div>
-    <h2 class="sec-h">השירותים שלי</h2>
+    <h2 class="sec-h">שירותי אנדרואיד</h2>
     <p class="sec-sub">כל שירות כולל ייעוץ מקצועי ואחריות מלאה.</p>
   </div>
   <div class="bento reveal">
@@ -764,7 +835,7 @@ body.light .divider{background:rgba(80,50,180,.1)}
   <div class="contact-glass reveal">
     <div>
       <div class="cn-name">YTech</div>
-      <div class="cn-desc">מפתח אנדרואיד מקצועי – זמין לכל שאלה ושירות.</div>
+      <div class="cn-desc">מפתח ומתכנת מקצועי – זמין לכל שאלה ושירות.</div>
       <a href="mailto:130105630610a@gmail.com" class="cn-mail"><i class="fa-solid fa-envelope"></i> 130105630610a@gmail.com</a>
     </div>
     <div class="cn-btns">
